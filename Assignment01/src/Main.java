@@ -1,38 +1,55 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello and welcome!");
 
-        System.out.println("0: Student");
-        System.out.println("1: Professors");
-        System.out.println("2: Administrators");
-        System.out.println("9: Quit");
-
+        // polymorphism: create objects here
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter the login option: ");
-        int number = scanner.nextInt();  // Read integer input
+        while(true){
 
+            System.out.println("Welcome to the University Course Registration System");
 
-        switch(number){
-            case 0:
+            System.out.println("1: Student");
+            System.out.println("2: Professor");
+            System.out.println("3: Administrator");
+            System.out.println("9: Exit the Application");
+
+            System.out.print("Enter the login option: ");
+            int number = scanner.nextInt();  // Read integer input
+
+            if(number == 1){
                 Student_Functionalities.main(null);  // Call the Student class
                 break;
-            case 1:
+            }
+
+            else if(number == 2){
                 Prof_Functionalities.main(null);  // Call the Professor class
                 break;
-            case 2:
+            }
+
+            else if(number == 3){
                 Admin_Functionalities.main(null);  // Call the Administrator class
                 break;
-            case 9:
+            }
+
+            else if(number == 9){
                 System.out.println("Exiting the system...");
-                break;
-            default:
-                System.out.println("Invalid option, please try again.");
-                break;
+                System.exit(0);
+            }
         }
 
         System.exit(0);
+    }
+    static int check_customer_type(Student student){
+        int return_val = 0;
+
+        for(int i = 0; i < Human.student_list.size(); i++){
+            if(Human.student_list.get(i).getUsername().equals(student.getUsername()) && Human.student_list.get(i).getPassword().equals(student.getPassword())){
+                return_val = 1;
+                return return_val;
+            }
+        }
+        return return_val;
     }
 }
