@@ -2,7 +2,6 @@ import java.util.*;
 
 public class Student {
     private String password;
-
     public String name;
     public int sem;
 
@@ -11,10 +10,13 @@ public class Student {
         this.password = password;
     }
 
+    public int curr_credits;
+
+    public ArrayList<Course> courses_taken = new ArrayList<>();
+
     public String getPassword() {
         return password;
     }
-
     public String getUsername() {
         return name;
     }

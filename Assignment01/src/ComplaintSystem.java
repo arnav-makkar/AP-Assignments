@@ -66,12 +66,11 @@ public class ComplaintSystem {
         complaints.add(newComplaint);
 
         System.out.println("Complaint submitted successfully with ID: " + newComplaint.getComplaintID());
-        System.out.println();
     }
 
     // Method to view complaints for a particular student
     public static void viewComplaints(Scanner sc) {
-        System.out.print("Enter Student ID to view complaints: ");
+        System.out.print("Enter Username: ");
         String studentID = sc.nextLine();
 
         System.out.println("Complaints for Student ID: " + studentID);
@@ -86,7 +85,6 @@ public class ComplaintSystem {
         if (!found) {
             System.out.println("No complaints found for this student ID.");
         }
-        System.out.println();
     }
 
     public static void main(String[] args) {
@@ -115,6 +113,7 @@ public class ComplaintSystem {
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
+            break;
         }
         //scanner.close();
     }
