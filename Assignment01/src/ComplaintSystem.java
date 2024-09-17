@@ -45,7 +45,7 @@ class Complaint {
 }
 
 public class ComplaintSystem {
-    private static ArrayList<Complaint> complaints = new ArrayList<>();
+    public static ArrayList<Complaint> complaints = new ArrayList<>();
     private static int complaintCounter = 1000;  // To generate unique complaint IDs
 
     // Method to generate a new complaint ID
