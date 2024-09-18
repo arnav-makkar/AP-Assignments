@@ -6,15 +6,13 @@ class Complaint {
     private String description;
     private String status;
 
-
     public Complaint(int complaintID, String studentID, String description) {
         this.complaintID = complaintID;
         this.studentID = studentID;
         this.description = description;
-        this.status = "Pending";  // Default status is "Pending"
+        this.status = "Pending";
     }
 
-    // Getter and Setter methods
     public int getComplaintID() {
         return complaintID;
     }
@@ -35,7 +33,6 @@ class Complaint {
         this.status = status;
     }
 
-    // Display complaint details
     public void displayComplaint() {
         System.out.println("Complaint ID: " + complaintID);
         System.out.println("Description: " + description);
@@ -48,30 +45,22 @@ public class ComplaintSystem {
     public static ArrayList<Complaint> complaints = new ArrayList<>();
     private static int complaintCounter = 1000;  // To generate unique complaint IDs
 
-    // Method to generate a new complaint ID
     public static int generateComplaintID() {
         return ++complaintCounter;
     }
 
-    // Method for students to submit complaints
-    public static void submitComplaint(Scanner sc) {
-        System.out.print("Enter Student ID: ");
-        String studentID = sc.nextLine();
+    public static void submitComplaint(String studentID, Scanner sc) {
 
         System.out.print("Enter Complaint Description: ");
         String description = sc.nextLine();
 
-        // Generate unique complaint ID and create new complaint
         Complaint newComplaint = new Complaint(generateComplaintID(), studentID, description);
         complaints.add(newComplaint);
 
         System.out.println("Complaint submitted successfully with ID: " + newComplaint.getComplaintID());
     }
 
-    // Method to view complaints for a particular student
-    public static void viewComplaints(Scanner sc) {
-        System.out.print("Enter Username: ");
-        String studentID = sc.nextLine();
+    public static void viewComplaints(String studentID) {
 
         System.out.println("Complaints for Student ID: " + studentID);
         boolean found = false;
@@ -87,7 +76,7 @@ public class ComplaintSystem {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String studentID) {
         Scanner scanner = new Scanner(System.in);
         int choice;
 
@@ -98,23 +87,23 @@ public class ComplaintSystem {
             System.out.println("3. Exit");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
-            scanner.nextLine();  // Consume newline
+            scanner.nextLine();
 
-            switch (choice) {
-                case 1:
-                    submitComplaint(scanner);
-                    break;
-                case 2:
-                    viewComplaints(scanner);
-                    break;
-                case 3:
-                    System.out.println("Exiting the system.");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
+            if(choice == 1) {
+                submitComplaint(studentID, scanner);
             }
-            break;
+
+            else if(choice == 2) {
+                viewComplaints(studentID);
+            }
+
+            else if(choice == 3) {
+                break;
+            }
+
+            else{
+                System.out.println("Invalid Choice, please try again.");
+            }
         }
-        //scanner.close();
     }
 }

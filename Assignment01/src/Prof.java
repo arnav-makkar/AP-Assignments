@@ -1,8 +1,8 @@
 import java.util.*;
 
-public class Prof{
-    public String name;
-    private String password;
+public class Prof extends User{
+    //public String name;
+    //private String password;
     public ArrayList<Course> courses_assigned = new ArrayList<>();
     
     Prof(String name,String password){
@@ -16,12 +16,5 @@ public class Prof{
                 }
             }
         }
-    }
-
-    public String getPassword() {
-        return password;
-    }
-    public String getUsername() {
-        return name;
     }
 }

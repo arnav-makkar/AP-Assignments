@@ -1,8 +1,8 @@
 import java.util.*;
 
-public class Student {
-    private String password;
-    public String name;
+public class Student extends User{
+    //private String password;
+    //public String name;
 
     public int grades_assigned = 0;
     HashMap<Course, Float> grades_map = new HashMap<>();
@@ -13,11 +13,4 @@ public class Student {
     }
 
     public ArrayList<Course> courses_taken = new ArrayList<>();
-
-    public String getPassword() {
-        return password;
-    }
-    public String getUsername() {
-        return name;
-    }
 }

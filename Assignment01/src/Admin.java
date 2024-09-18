@@ -1,7 +1,5 @@
-import java.util.*;
-
-public class Admin {
-    public String password;
+public class Admin extends User{
+    //private String password;
 
     Admin(String password) {
         this.password = password;

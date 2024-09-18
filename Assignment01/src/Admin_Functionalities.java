@@ -11,21 +11,22 @@ public class Admin_Functionalities {
             System.out.println("Enter admin password: ");
             String password_entered = scanner.nextLine();
 
-            if(password_entered == admin.password){
+            if(Objects.equals(password_entered, admin.getPassword())){
                 System.out.println("You have successfully logged in!");
 
-                System.out.println("Please choose any of the following options: ");
-                System.out.println("1. Manage Course Catalog");
-                System.out.println("2. Manage Student Records");
-                System.out.println("3. Assign Professors to Courses");
-                System.out.println("4. Handle Complaints");
-                System.out.println("5. Exit");
-                System.out.println("Enter your choice: ");
-
-                int choice = scanner.nextInt();
-                scanner.nextLine();
-
                 while(true){
+
+                    System.out.println("Please choose any of the following options: ");
+                    System.out.println("1. Manage Course Catalog");
+                    System.out.println("2. Manage Student Records");
+                    System.out.println("3. Assign Professors to Courses");
+                    System.out.println("4. Handle Complaints");
+                    System.out.println("5. Exit");
+                    System.out.println("Enter your choice: ");
+
+                    int choice = scanner.nextInt();
+                    scanner.nextLine();
+
                     if(choice == 1){
                         System.out.println("Enter semester: ");
                         int chosen_sem = scanner.nextInt();
@@ -107,7 +108,6 @@ public class Admin_Functionalities {
                                 System.out.println("Invalid choice, please try again");
                             }
                         }
-
                     }
 
                     else if(choice == 2){
@@ -148,29 +148,29 @@ public class Admin_Functionalities {
                                         System.out.print(i+1 + ". ");
                                         System.out.println(Human.student_list.get(i).name);
                                     }
-                                }
 
-                                System.out.print("Select the student for whom you want to assign the grades: ");
-                                int snum = scanner.nextInt();
-                                scanner.nextLine();
+                                    System.out.print("Select the student for whom you want to assign the grades: ");
+                                    int snum = scanner.nextInt();
+                                    scanner.nextLine();
 
-                                if(Human.student_list.get(snum-1).courses_taken.isEmpty()){
-                                    System.out.println("The student has not selected any courses");
-                                }
-
-                                else{
-                                    for(int i = 0; i<Human.student_list.get(snum-1).courses_taken.size(); i++){
-
-                                        String course_name = Human.student_list.get(snum-1).courses_taken.get(i).name;
-
-                                        System.out.print("Enter grade for " + course_name + ": ");
-                                        Float grade = scanner.nextFloat();
-                                        scanner.nextLine();
-
-                                        Human.student_list.get(snum-1).grades_map.put(Human.student_list.get(snum-1).courses_taken.get(i), grade);
+                                    if(Human.student_list.get(snum-1).courses_taken.isEmpty()){
+                                        System.out.println("The student has not selected any courses");
                                     }
-                                    System.out.println("The grades have been assigned!");
-                                    Human.student_list.get(snum-1).grades_assigned = 1;
+
+                                    else{
+                                        for(int i = 0; i<Human.student_list.get(snum-1).courses_taken.size(); i++){
+
+                                            String course_name = Human.student_list.get(snum-1).courses_taken.get(i).name;
+
+                                            System.out.print("Enter grade for " + course_name + ": ");
+                                            Float grade = scanner.nextFloat();
+                                            scanner.nextLine();
+
+                                            Human.student_list.get(snum-1).grades_map.put(Human.student_list.get(snum-1).courses_taken.get(i), grade);
+                                        }
+                                        System.out.println("The grades have been assigned!");
+                                        Human.student_list.get(snum-1).grades_assigned = 1;
+                                    }
                                 }
                             }
 
@@ -224,14 +224,14 @@ public class Admin_Functionalities {
                             System.out.println(Data.sem_dir.get(indx).get(i).name);
                         }
 
-                        System.out.print(i + "Back");
+                        System.out.println((i+1) + ". " + "Back");
 
                         System.out.println("Enter Option: ");
                         int option = scanner.nextInt();
                         scanner.nextLine();
 
-                        if(option == i){
-                            break;
+                        if(option == i+1){
+                            continue;
                         }
 
                         else if(option<=i){
@@ -270,7 +270,7 @@ public class Admin_Functionalities {
                                         System.out.println("Complaint ID: " + ComplaintSystem.complaints.get(i).getComplaintID());
                                         System.out.println("Student ID: " + ComplaintSystem.complaints.get(i).getStudentID());
                                         System.out.println("Complaint Description: " + ComplaintSystem.complaints.get(i).getDescription());
-                                        System.out.println("Complaint Status" + ComplaintSystem.complaints.get(i).getStatus());
+                                        System.out.println("Complaint Status: " + ComplaintSystem.complaints.get(i).getStatus());
                                     }
                                 }
                             }
@@ -297,7 +297,7 @@ public class Admin_Functionalities {
                                 int c = 0;
                                 for(int i = 0; i<ComplaintSystem.complaints.size(); i++){
                                     if(ComplaintSystem.complaints.get(i).getStatus() == "Pending"){
-                                        System.out.println("Serial Number" + i+1);
+                                        System.out.println("Serial Number: " + (int)(i+1));
                                         System.out.println("Complaint ID: " + ComplaintSystem.complaints.get(i).getComplaintID());
                                         System.out.println("Student ID: " + ComplaintSystem.complaints.get(i).getStudentID());
                                         System.out.println("Complaint Description: " + ComplaintSystem.complaints.get(i).getDescription());
@@ -339,6 +339,8 @@ public class Admin_Functionalities {
                         System.out.println("Invalid choice, please try again");
                     }
                 }
+
+                break;
             }
             else{
                 System.out.println("Incorrect password, please try again.\nPassword = 1234");

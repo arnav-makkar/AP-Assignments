@@ -1,6 +1,22 @@
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Prof_Functionalities {
+    public static void print_courses_assigned(Prof current_user){
+        if(current_user.courses_assigned.isEmpty()){
+            System.out.println("There are no courses assigned yet");
+        }
+
+        else{
+            System.out.println("There are " + current_user.courses_assigned.size() + " courses assigned");
+
+            for(int i = 0; i<current_user.courses_assigned.size(); i++){
+                System.out.print(i+1 + ". ");
+                System.out.println(current_user.courses_assigned.get(i).name);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -23,9 +39,9 @@ public class Prof_Functionalities {
 
             if(choice == 1){
                 System.out.print("Enter Name: ");
-                String name = scanner.next();
+                String name = scanner.nextLine();
                 System.out.print("Enter Password: ");
-                String password = scanner.next();
+                String password = scanner.nextLine();
 
                 Prof temp_check = new Prof(name, password);
                 int user_check;
@@ -37,9 +53,9 @@ public class Prof_Functionalities {
                 }
 
                 else{
-                    current_user = Human.prof_list.get(0);
+                    current_user = Human.prof_list.getFirst();
                     for(int i = 0; i<Human.prof_list.size(); i++){
-                        if(Human.prof_list.get(i).name == name){
+                        if(Objects.equals(Human.prof_list.get(i).name, name)){
                             current_user = Human.prof_list.get(i);
                         }
                     }
@@ -86,18 +102,7 @@ public class Prof_Functionalities {
                                 scanner.nextLine();
 
                                 if(option2 == 1){
-                                    if(current_user.courses_assigned.isEmpty()){
-                                        System.out.println("There are no courses assigned yet");
-                                    }
-
-                                    else{
-                                        System.out.println("There are " + current_user.courses_assigned.size() + " courses assigned");
-
-                                        for(int i = 0; i<current_user.courses_assigned.size(); i++){
-                                            System.out.print(i+1 + ". ");
-                                            System.out.println(current_user.courses_assigned.get(i).name);
-                                        }
-                                    }
+                                    print_courses_assigned(current_user);
 
                                     System.out.println("Enter option: ");
                                     int option3 = scanner.nextInt();
@@ -115,18 +120,7 @@ public class Prof_Functionalities {
                                 }
 
                                 else if(option2 == 2){
-                                    if(current_user.courses_assigned.isEmpty()){
-                                        System.out.println("There are no courses assigned yet");
-                                    }
-
-                                    else{
-                                        System.out.println("There are " + current_user.courses_assigned.size() + " courses assigned");
-
-                                        for(int i = 0; i<current_user.courses_assigned.size(); i++){
-                                            System.out.print(i+1 + ". ");
-                                            System.out.println(current_user.courses_assigned.get(i).name);
-                                        }
-                                    }
+                                    print_courses_assigned(current_user);
 
                                     System.out.println("Enter option: ");
                                     int option3 = scanner.nextInt();
@@ -142,18 +136,7 @@ public class Prof_Functionalities {
                                 }
 
                                 else if(option2 == 3){
-                                    if(current_user.courses_assigned.isEmpty()){
-                                        System.out.println("There are no courses assigned yet");
-                                    }
-
-                                    else{
-                                        System.out.println("There are " + current_user.courses_assigned.size() + " courses assigned");
-
-                                        for(int i = 0; i<current_user.courses_assigned.size(); i++){
-                                            System.out.print(i+1 + ". ");
-                                            System.out.println(current_user.courses_assigned.get(i).name);
-                                        }
-                                    }
+                                    print_courses_assigned(current_user);
 
                                     System.out.println("Enter option: ");
                                     int option3 = scanner.nextInt();
@@ -169,18 +152,7 @@ public class Prof_Functionalities {
                                 }
 
                                 else if(option2 == 4){
-                                    if(current_user.courses_assigned.isEmpty()){
-                                        System.out.println("There are no courses assigned yet");
-                                    }
-
-                                    else{
-                                        System.out.println("There are " + current_user.courses_assigned.size() + " courses assigned");
-
-                                        for(int i = 0; i<current_user.courses_assigned.size(); i++){
-                                            System.out.print(i+1 + ". ");
-                                            System.out.println(current_user.courses_assigned.get(i).name);
-                                        }
-                                    }
+                                    print_courses_assigned(current_user);
 
                                     System.out.println("Enter option: ");
                                     int option3 = scanner.nextInt();
@@ -235,6 +207,7 @@ public class Prof_Functionalities {
                             System.out.println("Invalid Option, please try again");
                         }
                     }
+                    break;
                 }
             }
 
