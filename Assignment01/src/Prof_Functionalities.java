@@ -1,7 +1,7 @@
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Prof_Functionalities {
+public class Prof_Functionalities implements Data, Human{
     public static void print_courses_assigned(Prof current_user){
         if(current_user.courses_assigned.isEmpty()){
             System.out.println("There are no courses assigned yet");
@@ -46,10 +46,11 @@ public class Prof_Functionalities {
                 Prof temp_check = new Prof(name, password);
                 int user_check;
                 Prof current_user;
-                user_check = Main.check_prof_exists(temp_check);
+                user_check = User.check_user_exists(temp_check);
 
                 if(user_check == 0){
                     System.out.println("User cannot be found, please try again");
+                    System.out.println("Try 'Dr. Arun Balaji, Arun123' or 'Dr. Tammam Tillo, Tammam123'");
                 }
 
                 else{

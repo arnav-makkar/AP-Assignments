@@ -61,18 +61,17 @@ public class ComplaintSystem {
     }
 
     public static void viewComplaints(String studentID) {
-
-        System.out.println("Complaints for Student ID: " + studentID);
         boolean found = false;
-        for (Complaint complaint : complaints) {
-            if (complaint.getStudentID().equals(studentID)) {
-                complaint.displayComplaint();
+
+        for(int i = 0; i < complaints.size(); i++) {
+            if(complaints.get(i).getStudentID().equals(studentID)) {
+                complaints.get(i).displayComplaint();
                 found = true;
             }
         }
 
         if (!found) {
-            System.out.println("No complaints found for this student ID.");
+            System.out.println("No complaints found");
         }
     }
 

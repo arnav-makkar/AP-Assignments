@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Admin_Functionalities {
+public class Admin_Functionalities implements Data, Human{
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to the Administrator Portal!");
@@ -8,7 +8,7 @@ public class Admin_Functionalities {
         Admin admin = new Admin("1234");
 
         while(true) {
-            System.out.println("Enter admin password: ");
+            System.out.print("Enter admin password: ");
             String password_entered = scanner.nextLine();
 
             if(Objects.equals(password_entered, admin.getPassword())){
