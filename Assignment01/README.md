@@ -11,4 +11,4 @@ For example, the classes Student, Prof and Admin inherit from abstract class Use
 <br>
 Two interfaces, namely Human and Data store ArrayLists that are accessed by multiple classes.<br>
 Both runtime and compile-time polymorphism have been implemented(override and check_user_exits function in Student Class).<br>
-Finally encapsulation has been used in several places in the form of getters and setters.
+Encapsulation has been used in several places in the form of getters and setters.
