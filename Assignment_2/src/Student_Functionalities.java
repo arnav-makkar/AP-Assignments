@@ -48,7 +48,7 @@ public class Student_Functionalities implements Data, Human{
 
                 try{
                     if(user_check == 0){
-                        throw new InvalidLoginException("User cannot be found, please Sign-Up first");
+                        throw new InvalidLoginException("User cannot be found, please Sign-Up first if you are a new user");
                     }
 
                     else {
@@ -116,7 +116,7 @@ public class Student_Functionalities implements Data, Human{
 
                                 else if (choice_student_second == 2) {
                                     try{
-                                        if(Course.deadline != null && !Course.deadline.isAfter(LocalDate.now())){
+                                        if(Course.deadline != null && Course.deadline.isBefore(LocalDate.now())){
                                             throw new DropDeadlinePassedException("Courses cannot be selected since you have passed the Add/Drop Deadline set by Admin");
                                         }
 

@@ -304,13 +304,15 @@ public class Admin_Functionalities implements Data, Human{
                                 }
                             }
                         } else if (choice == 5) {
-                            if (Course.deadline == null) {
-                                System.out.println("Course Add/Drop Deadline has not been added yet");
-                            } else {
-                                System.out.println("Current Add/Drop Deadline is " + Course.deadline);
-                            }
 
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+                            if (Course.deadline == null) {
+                                System.out.println("Course Add/Drop Deadline has not been added yet");
+                            }
+                            else {
+                                System.out.println("Current Add/Drop Deadline is " + Course.deadline.format(formatter));
+                            }
 
                             while (true) {
                                 try {

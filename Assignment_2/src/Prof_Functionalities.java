@@ -209,10 +209,10 @@ public class Prof_Functionalities implements Data, Human{
                                             feed_list.get(i).viewFeedback();
                                         }
                                     }
-                                }
 
-                                if(c == 0){
-                                    System.out.println("There are no feedbacks yet");
+                                    if(c == 0){
+                                        System.out.println("There are no feedbacks yet");
+                                    }
                                 }
                             }
                             else if (option == 6) {
