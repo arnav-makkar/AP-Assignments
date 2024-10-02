@@ -67,7 +67,7 @@ public class Student_Functionalities implements Data, Human{
                         }
 
                         if (found) {
-                            System.out.println("Hi " + current_user.getUsername());
+                            System.out.println("\nHi " + current_user.getUsername());
 
                             while(true){
                                 System.out.println("Please choose any of the following options: ");
@@ -307,7 +307,7 @@ public class Student_Functionalities implements Data, Human{
                                 }
 
                                 else {
-                                    System.out.println("Invalid choice, please try again.");
+                                    System.out.println("Invalid choice, please try again.\n");
                                 }
                             }
                             break;

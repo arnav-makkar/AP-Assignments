@@ -1,5 +1,4 @@
 public class TA extends Student{
-
     public Course course_assigned;
 
     TA(String name, String password, Course course) {
@@ -18,5 +17,8 @@ public class TA extends Student{
         Human.student_list.add(student);
     }
 
-
+    @Override
+    public String toString() {
+        return "Name: " + getUsername() + "\nCourse Assigned: " + course_assigned;
+    }
 }

@@ -5,7 +5,7 @@ public class TA_Functionalities {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to the Teaching Assistant Portal!");
+        System.out.println("\nWelcome to the Teaching Assistant Portal!");
 
         while(true){
 
@@ -30,20 +30,23 @@ public class TA_Functionalities {
                 try {
                     if (user_check == 0) {
                         throw new InvalidLoginException("User cannot be found, please try again\nTry 'Aayush Mishra, Aayush123'");
-                    } else {
+                    }
+
+                    else {
                         current_user = Human.ta_list.getFirst();
                         for (int i = 0; i < Human.ta_list.size(); i++) {
                             if (Objects.equals(Human.ta_list.get(i).name, name)) {
                                 current_user = Human.ta_list.get(i);
                             }
                         }
-                        System.out.println("Hi " + current_user.getUsername());
+                        System.out.println("\nHi " + current_user.getUsername());
 
                         while (true) {
                             System.out.println("Please choose any of the following options: ");
                             System.out.println("1. View Enrolled Students");
                             System.out.println("2. Update Grades");
-                            System.out.println("3. Back");
+                            System.out.println("3. View Profile");
+                            System.out.println("4. Back");
 
                             System.out.print("Enter Option: ");
                             int option = scanner.nextInt();
@@ -108,16 +111,20 @@ public class TA_Functionalities {
                             }
 
                             else if(option == 3){
+                                System.out.println(current_user.toString());
+                            }
+
+                            else if(option == 4){
                                 break;
                             }
                         }
                     }
+
+                    break;
                 }
                 catch (InvalidLoginException e){
                     System.out.println(e.getMessage());
                 }
-
-                break;
             }
 
             else if(choice == 2){

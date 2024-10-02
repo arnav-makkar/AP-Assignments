@@ -48,42 +48,44 @@ public class Main implements Data, Human {
 
             System.out.println("\nWelcome to the University Course Registration System");
 
-            System.out.println("1: Student");
-            System.out.println("2: Professor");
-            System.out.println("3: Teaching Assistant");
-            System.out.println("4: Administrator");
-            System.out.println("5: Exit the Application");
+            try {
 
-            System.out.print("Enter the login option: ");
-            int number = scanner.nextInt();  // Read integer input
+                System.out.println("1: Student");
+                System.out.println("2: Professor");
+                System.out.println("3: Teaching Assistant");
+                System.out.println("4: Administrator");
+                System.out.println("5: Exit the Application");
 
-            if(number == 1){
-                Student_Functionalities.main(null);
-                //break;
+                System.out.print("Enter the login option: ");
+                int number = scanner.nextInt();  // Read integer input
+
+                if (number == 1) {
+                    Student_Functionalities.main(null);
+                    //break;
+                } else if (number == 2) {
+                    Prof_Functionalities.main(null);
+                    //break;
+                } else if (number == 3) {
+                    TA_Functionalities.main(null);
+                    //break;
+                } else if (number == 4) {
+                    Admin_Functionalities.main(null);
+                    //break;
+                } else if (number == 5) {
+                    System.out.println("Exiting the system...");
+                    System.exit(0);
+                } else {
+                    System.out.println("Invalid login option, please try again");
+                }
             }
 
-            else if(number == 2){
-                Prof_Functionalities.main(null);
-                //break;
+            catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next();
             }
 
-            else if(number == 3){
-                TA_Functionalities.main(null);
-                //break;
-            }
-
-            else if(number == 4){
-                Admin_Functionalities.main(null);
-                //break;
-            }
-
-            else if(number == 5){
-                System.out.println("Exiting the system...");
-                System.exit(0);
-            }
-
-            else{
-                System.out.println("Invalid login option, please try again");
+            catch (Exception e) {
+                System.out.println("An unexpected error occurred: " + e.getMessage());
             }
         }
     }

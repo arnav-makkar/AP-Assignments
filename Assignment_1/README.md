@@ -1,4 +1,4 @@
-# Assignment01
+# Assignment 1
 
 The code is very intuitive and easy to run. Simply run the "Main" class to get started.
 <br>

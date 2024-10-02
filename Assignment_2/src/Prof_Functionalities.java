@@ -20,7 +20,7 @@ public class Prof_Functionalities implements Data, Human{
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Welcome to the Professor Portal!");
+        System.out.println("\nWelcome to the Professor Portal!");
 
         Prof arun = new Prof("Dr. Arun Balaji", "Arun123");
         Prof tammam = new Prof("Dr. Tammam Tillo", "Tammam123");
@@ -60,7 +60,7 @@ public class Prof_Functionalities implements Data, Human{
                                 current_user = Human.prof_list.get(i);
                             }
                         }
-                        System.out.println("Hi " + current_user.getUsername());
+                        System.out.println("\nHi " + current_user.getUsername());
 
                         while (true) {
                             System.out.println("Please choose any of the following options: ");

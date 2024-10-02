@@ -1,14 +1,14 @@
-# Assignment01
+# Assignment 2
 
-The code is very intuitive and easy to run. Simply run the "Main" class to get started.
+Run the "Main" class to get started, all other instructions follow.
 <br>
-Login credentials for two professors and one admin have been pre-stored in the program and their login details will be visible on entering incorrect username/password.
+Login credentials for three students, two professors, one TA and one admin have been pre-stored in the program and their login details will be visible on entering incorrect username/password.
 <br>
 
 All required functionalities have been implemented by incorporating all major OOPS concepts.
 <br>
-For example, the classes Student, Prof and Admin inherit from abstract class User. (inheritance, abstraction and classes)
-<br>
-Two interfaces, namely Human and Data store ArrayLists that are accessed by multiple classes.<br>
-Both runtime and compile-time polymorphism have been implemented(override and check_user_exits function in Student Class).<br>
-Encapsulation has been used in several places in the form of getters and setters.
+A generic class, Feedback has been created to store the students feedback and this can later be accessed by the Prof.
+
+Object Classes have been used in multiple places, one example could be the toStirng() function in TA class.
+
+For exception handling, a package named custom-exceptions was created which stored the three required custom exceptions. They have been implemented using multiple try-catch blocks across the program.

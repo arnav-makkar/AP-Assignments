@@ -7,7 +7,7 @@ import custom_exceptions.*;
 public class Admin_Functionalities implements Data, Human{
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to the Administrator Portal!");
+        System.out.println("\nWelcome to the Administrator Portal!");
 
         Admin admin = new Admin("1234");
 
@@ -22,7 +22,7 @@ public class Admin_Functionalities implements Data, Human{
                 }
 
                 else{
-                    System.out.println("You have successfully logged in!\n");
+                    System.out.println("\nYou have successfully logged in!\n");
 
                     while (true) {
 

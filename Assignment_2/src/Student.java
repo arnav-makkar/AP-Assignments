@@ -8,7 +8,6 @@ public class Student extends User{
     HashMap<Course, Float> grades_map = new HashMap<>();
 
 
-
     Student(String name, String password){
         this.name = name;
         this.password = password;
