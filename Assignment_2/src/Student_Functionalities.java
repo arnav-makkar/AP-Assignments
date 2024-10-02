@@ -288,7 +288,7 @@ public class Student_Functionalities implements Data, Human{
                                         System.out.println("Enter course feedback(textual): ");
                                         String fb2 = scanner.nextLine();
 
-                                        Feedback feedback = new Feedback<>(current_user.courses_taken.get(opt-1), current_user.getUsername());
+                                        Feedback<Object> feedback = new Feedback<>(current_user.courses_taken.get(opt-1), current_user.getUsername());
 
                                         feedback.addFeedback(fb1);
                                         feedback.addFeedback(fb2);
