@@ -33,4 +33,16 @@ abstract class User {
         }
         return return_val;
     }
+
+    static int check_user_exists(TA ta){
+        int return_val = 0;
+
+        for(int i = 0; i < Human.ta_list.size(); i++){
+            if(Human.ta_list.get(i).getUsername().equals(ta.getUsername()) && Human.ta_list.get(i).getPassword().equals(ta.getPassword())){
+                return_val = 1;
+                return return_val;
+            }
+        }
+        return return_val;
+    }
 }

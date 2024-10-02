@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public class Course {
     public String name;
     public String code;
@@ -8,6 +10,10 @@ public class Course {
     public String pre_req;
     public String misc_info;
 
+    public int students_enrolled = 0;
+    public int e_limit = 600;
+    static LocalDate deadline = null;
+
     public Course(String name, String code, String prof, String timings, int semester, int Credits) {
         this.name = name;
         this.code = code;
@@ -17,6 +23,10 @@ public class Course {
         this.semester = semester;
         this.pre_req = null;
         this.misc_info = null;
+    }
+
+    public int getE_limit() {
+        return e_limit;
     }
 
     @Override

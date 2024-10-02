@@ -35,34 +35,49 @@ public class Main implements Data, Human {
         Course PASSP = new Course("Political Anthropology: State, Subject and Power", "SOC216", "Dr. Deepak Prince", "3:00pm-6:00pm on Wednesday", 3, 4);
         Data.sem3.addAll(Arrays.asList(AP, OS, M3, DM, NT, SPP, PDE, PASSP));
 
+        Student Arnav_Makkar = new Student("Arnav Makkar", "Arnav1234");
+        Student Aditya_Singh = new Student("Aditya Singh", "Aditya1234");
+        Student Rushil_Singha = new Student("Rushil Singha", "Rushil1234");
+        Human.student_list.addAll(List.of(Arnav_Makkar, Aditya_Singh, Rushil_Singha));
+
+
+        TA Aayush_Mishra = new TA("Aayush Mishra", "Aayush123", AP);
+        Human.ta_list.add(Aayush_Mishra);
+
         while(true){
 
-            System.out.println("Welcome to the University Course Registration System");
+            System.out.println("\nWelcome to the University Course Registration System");
 
             System.out.println("1: Student");
             System.out.println("2: Professor");
-            System.out.println("3: Administrator");
-            System.out.println("4: Exit the Application");
+            System.out.println("3: Teaching Assistant");
+            System.out.println("4: Administrator");
+            System.out.println("5: Exit the Application");
 
             System.out.print("Enter the login option: ");
             int number = scanner.nextInt();  // Read integer input
 
             if(number == 1){
-                Student_Functionalities.main(null);  // Call the Student class
+                Student_Functionalities.main(null);
                 //break;
             }
 
             else if(number == 2){
-                Prof_Functionalities.main(null);  // Call the Professor class
+                Prof_Functionalities.main(null);
                 //break;
             }
 
             else if(number == 3){
-                Admin_Functionalities.main(null);  // Call the Administrator class
+                TA_Functionalities.main(null);
                 //break;
             }
 
             else if(number == 4){
+                Admin_Functionalities.main(null);
+                //break;
+            }
+
+            else if(number == 5){
                 System.out.println("Exiting the system...");
                 System.exit(0);
             }
