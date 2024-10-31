@@ -226,7 +226,9 @@ public class Admin_Functionalities implements Data, Human{
                                 continue;
                             } else if (option <= i) {
                                 System.out.println("Enter professor name: ");
-                                Data.sem_dir.get(indx).get(i).prof = scanner.nextLine();
+
+                                String newname = scanner.nextLine();
+                                Data.sem_dir.get(indx).get(i-1).changeProfName(newname);
 
                                 System.out.println("Professor has been assigned!");
                             } else {

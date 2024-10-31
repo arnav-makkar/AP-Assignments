@@ -25,6 +25,10 @@ public class Course {
         this.misc_info = null;
     }
 
+    public void changeProfName(String newProf) {
+        this.prof = newProf;
+    }
+
     public int getE_limit() {
         return e_limit;
     }
