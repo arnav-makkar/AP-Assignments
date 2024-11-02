@@ -82,7 +82,7 @@ public class Admin implements User{
                                 System.out.println("Enter Item Price: ");
                                 double price = scanner.nextDouble();
 
-                                Product prod = new Product(itemName, quantity, price);
+                                Product prod = new Product(itemName, price);
 
                                 Menu_Item.menu_list.get(ind).add(prod);
 
@@ -123,13 +123,10 @@ public class Admin implements User{
                                     System.out.print("Enter New Name: ");
                                     String newName = scanner.nextLine();
 
-                                    System.out.print("Enter New Quantity: ");
-                                    int newQuantity = scanner.nextInt();
-
                                     System.out.print("Enter New Price: ");
                                     double newPrice = scanner.nextDouble();
 
-                                    Menu_Item.menu_list.get(ind).get(choice4-1).updateItem(newName, newQuantity, newPrice);
+                                    Menu_Item.menu_list.get(ind).get(choice4-1).updateItem(newName, newPrice);
 
                                     System.out.print("Item details have been successfully updated!");
                                 }
@@ -167,6 +164,7 @@ public class Admin implements User{
                                     System.out.print("Select Item to remove: ");
                                     int choice4 = scanner.nextInt();
 
+                                    Menu_Item.menu_list.get(ind).get(choice4-1).setIs_avaliable(false);
                                     Menu_Item.menu_list.get(ind).remove(choice4-1);
 
                                     System.out.print("Item has been successfully removed!");
@@ -183,7 +181,6 @@ public class Admin implements User{
                             System.out.println("Invalid Choice");
                         }
                     }
-
                 }
 
                 else if(choice == 2){
@@ -224,7 +221,18 @@ public class Admin implements User{
                 }
 
                 else if(choice == 3){
-                    // report
+
+                    System.out.println("\nDaily Sales Report\n");
+
+                    int total_sales = 0;
+                    Product item = null;
+
+                    // calc tot sales
+                    // calc mpi
+
+                    System.out.println("Total Orders: " + Order.vip_order_list.size()+Order.order_list.size());
+                    System.out.println("Total Sales: " + total_sales);
+                    System.out.println("Most Popular Product: " + item.getName());
                 }
 
                 else if(choice == 4){

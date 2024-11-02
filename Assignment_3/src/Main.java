@@ -21,10 +21,10 @@ public class Main {
 
         User.cust_list.add(vip_cust);
 
-        Product coffee = new Product("Coffee", 100, 20);
-        Product tea = new Product("Tea", 100, 10);
-        Product samosa = new Product("Samosa", 10, 20);
-        Product rajma = new Product("Rajma Chawal", 10, 100);
+        Product coffee = new Product("Coffee",20);
+        Product tea = new Product("Tea",10);
+        Product samosa = new Product("Samosa",20);
+        Product rajma = new Product("Rajma Chawal",100);
 
         Menu_Item.menu_list.get(0).add(coffee);
         Menu_Item.menu_list.get(0).add(tea);

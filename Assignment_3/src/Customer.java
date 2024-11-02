@@ -6,6 +6,7 @@ public class Customer implements User{
     private String name;
     private String password;
     private static LinkedHashMap<Product, Integer> Cart = new LinkedHashMap<>();
+    static ArrayList<Order> cust_order = new ArrayList<>();
 
     Customer(String name, String password){
         this.name = name;
@@ -22,6 +23,20 @@ public class Customer implements User{
     public static void displayCatMenu(int ind){
         for(int i = 0; i < Menu_Item.menu_list.get(ind).size(); i++) {
             System.out.println(i + 1 + ". " + Menu_Item.menu_list.get(ind).get(i).getName() + ": " + Menu_Item.menu_list.get(ind).get(i).getPrice());
+        }
+    }
+
+    public static void printCart(Customer current_user){
+        System.out.printf("%-5s %-15s %-10s %-10s%n", "S.No.", "Product", "Quantity", "Price");
+
+        int i = 1;
+        for(Map.Entry<Product, Integer> entry : current_user.Cart.entrySet()) {
+            Product product = entry.getKey();
+            int quantity = entry.getValue();
+            double price = product.getPrice();
+
+            System.out.printf("%-5d %-15s %-10d Rs. %-10.2f%n", i, product.getName(), quantity, price);
+            i++;
         }
     }
 
@@ -43,7 +58,7 @@ public class Customer implements User{
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("\nWelcome to Customer Interface");
+        System.out.println("\nWelcome to Customer Interface!");
 
         while(true){
             System.out.println("1. Sign Up");
@@ -160,17 +175,7 @@ public class Customer implements User{
                                         System.out.println("No items to display");
                                     }
                                     else{
-                                        System.out.printf("%-5s %-15s %-10s %-10s%n", "S.No.", "Product", "Quantity", "Price");
-
-                                        int i = 1;
-                                        for(Map.Entry<Product, Integer> entry : current_user.Cart.entrySet()) {
-                                            Product product = entry.getKey();
-                                            int quantity = entry.getValue();
-                                            double price = product.getPrice();
-
-                                            System.out.printf("%-5d %-15s %-10d $%-10.2f%n", i, product.getName(), quantity, price);
-                                            i++;
-                                        }
+                                        printCart(current_user);
                                     }
                                 }
 
@@ -204,7 +209,7 @@ public class Customer implements User{
                                             int choice5 = scanner.nextInt();
                                             scanner.nextLine();
 
-                                            if(choice5 < 1 || choice > Menu_Item.menu_list.get(ind).size()){
+                                            if(choice5 < 1 || choice5 > Menu_Item.menu_list.get(ind).size()){
                                                 System.out.println("Invalid Choice");
                                             }
 
@@ -225,17 +230,7 @@ public class Customer implements User{
                                         System.out.println("No items to display");
                                     }
                                     else{
-                                        System.out.printf("%-5s %-15s %-10s %-10s%n", "S.No.", "Product", "Quantity", "Price");
-
-                                        int i = 1;
-                                        for(Map.Entry<Product, Integer> entry : current_user.Cart.entrySet()) {
-                                            Product product = entry.getKey();
-                                            int quantity = entry.getValue();
-                                            double price = product.getPrice();
-
-                                            System.out.printf("%-5d %-15s %-10d $%-10.2f%n", i, product.getName(), quantity, price);
-                                            i++;
-                                        }
+                                        printCart(current_user);
 
                                         System.out.print("Select item to remove: ");
                                         int item_ind = scanner.nextInt();
@@ -276,6 +271,17 @@ public class Customer implements User{
                                     scanner.nextLine();
                                     String address = scanner.nextLine();
 
+                                    Order ordr = new Order(current_user.Cart);
+
+                                    current_user.cust_order.add(ordr);
+
+                                    if(current_user.vip){
+                                        Order.order_list.add(ordr);
+                                    }
+                                    else{
+                                        Order.vip_order_list.add(ordr);
+                                    }
+
                                     System.out.println("Order Successful!");
                                 }
 
@@ -291,12 +297,66 @@ public class Customer implements User{
 
                         else if(choice2 == 3){
 
+                            while(true){
+                                System.out.println("1. View Order Status");
+                                System.out.println("2. Cancel Order");
+                                System.out.println("3. View Order History");
+                                System.out.println("4. Back");
+                                System.out.print("Enter Your Choice: ");
 
+                                int choice3 = scanner.nextInt();
+                                scanner.nextLine();
 
+                                if(choice3 == 1){
+                                    System.out.println("Order Status: " + current_user.cust_order.getLast().getStatus());
+                                }
+
+                                else if(choice3 == 2){
+                                    current_user.cust_order.getLast().setStatus(3);
+
+                                    System.out.println("Your order has been cancelled!");
+                                }
+
+                                else if(choice3 == 3){
+
+                                    if(current_user.cust_order.isEmpty()){
+                                        System.out.println("No items to display");
+                                    }
+
+                                    else{
+                                        for (int i = 0; i < current_user.cust_order.size(); i++){
+
+                                            System.out.printf("%-5s %-15s %-10s %-10s%n", "S.No.", "Product", "Quantity", "Price");
+
+                                            int j = 1;
+                                            Map<Product, Integer> order = current_user.cust_order.get(i).getOrder();
+                                            for(Map.Entry<Product, Integer> entry : order.entrySet()) {
+                                                Product product = entry.getKey();
+                                                int quantity = entry.getValue();
+                                                double price = product.getPrice();
+
+                                                System.out.printf("%-5d %-15s %-10d $%-10.2f%n", j, product.getName(), quantity, price);
+                                                j++;
+                                            }
+                                        }
+
+                                        System.out.println();
+                                    }
+
+                                }
+
+                                else if(choice3 == 4){
+                                    break;
+                                }
+
+                                else{
+                                    System.out.println("Invalid Choice");
+                                }
+                            }
                         }
 
                         else if(choice2 == 4){
-
+                            // review
                         }
 
                         else if(choice2 == 5){

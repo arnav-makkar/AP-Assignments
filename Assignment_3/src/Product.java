@@ -1,19 +1,19 @@
 public class Product extends Menu_Item{
 
-    private int quantity;
     private double price;
+    private boolean is_avaliable;
 
-    Product(String name, int quantity, double price) {
+    Product(String name, double price) {
         super(name);
 
-        this.quantity = quantity;
         this.price = price;
+        this.is_avaliable = true;
     }
 
-    public void updateItem(String name, int quantity, double price){
+    public void updateItem(String name, double price){
         this.name = name;
-        this.quantity = quantity;
         this.price = price;
+        this.is_avaliable = true;
     }
 
 
@@ -21,13 +21,16 @@ public class Product extends Menu_Item{
         return this.name;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public void setIs_avaliable(boolean is_avaliable) {
+        this.is_avaliable = is_avaliable;
+    }
+
+    public boolean getIs_avaliable() {
+        return this.is_avaliable;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setQuantity(int quantity) {this.quantity = quantity;}
 }
