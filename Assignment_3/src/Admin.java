@@ -13,7 +13,7 @@ public class Admin implements User{
     public static void main(String[] args){
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("\nWelcome to the Administrator Portal!");
+        System.out.println("\nWelcome to the Administrator Interface!");
 
         System.out.print("Enter Admin Name: ");
         String name = scanner.nextLine();
@@ -34,7 +34,7 @@ public class Admin implements User{
 
         else{
             while(true){
-                System.out.println("Hi " + name + "!\n");
+                System.out.println("\nHi " + name + "!");
 
                 System.out.println("1. Manage Menu");
                 System.out.println("2. Manage Orders");
@@ -54,15 +54,124 @@ public class Admin implements User{
                         System.out.print("Enter Your Choice: ");
 
                         int choice2 = scanner.nextInt();
+
                         if(choice2 == 1){
 
+                            System.out.print("Select Category: ");
+
+                            System.out.println("1. Beverages");
+                            System.out.println("2. Snacks");
+                            System.out.println("3. Meals");
+
+                            System.out.print("Enter Your Choice: ");
+                            int choice3 = scanner.nextInt();
+
+                            if(choice3 > 3 || choice3 < 1){
+                                System.out.println("Invalid Choice");
+                            }
+
+                            else{
+                                int ind = choice3 - 1;
+
+                                System.out.println("Enter Item Name: ");
+                                String itemName = scanner.nextLine();
+
+                                System.out.println("Enter Item Quantity: ");
+                                int quantity = scanner.nextInt();
+
+                                System.out.println("Enter Item Price: ");
+                                double price = scanner.nextDouble();
+
+                                Product prod = new Product(itemName, quantity, price);
+
+                                Menu_Item.menu_list.get(ind).add(prod);
+
+                                System.out.print("Item has been successfully added!");
+                            }
                         }
 
                         else if(choice2 == 2){
 
+                            System.out.print("Select Category: ");
+
+                            System.out.println("1. Beverages");
+                            System.out.println("2. Snacks");
+                            System.out.println("3. Meals");
+
+                            System.out.print("Enter Your Choice: ");
+                            int choice3 = scanner.nextInt();
+
+                            if(choice3 > 3 || choice3 < 1){
+                                System.out.println("Invalid Choice");
+                            }
+
+                            else{
+                                int ind = choice3 - 1;
+
+                                if(Menu_Item.menu_list.get(ind).size() == 0){
+                                    System.out.print("No items to display");
+                                }
+
+                                else{
+                                    for(int i = 0; i<Menu_Item.menu_list.get(ind).size(); i++){
+                                        System.out.println(i+1 + ". " + Menu_Item.menu_list.get(ind).get(i).getName());
+                                    }
+
+                                    System.out.print("Select Item to edit: ");
+                                    int choice4 = scanner.nextInt();
+
+                                    System.out.print("Enter New Name: ");
+                                    String newName = scanner.nextLine();
+
+                                    System.out.print("Enter New Quantity: ");
+                                    int newQuantity = scanner.nextInt();
+
+                                    System.out.print("Enter New Price: ");
+                                    double newPrice = scanner.nextDouble();
+
+                                    Menu_Item.menu_list.get(ind).get(choice4-1).updateItem(newName, newQuantity, newPrice);
+
+                                    System.out.print("Item details have been successfully updated!");
+                                }
+                            }
+
                         }
 
                         else if(choice2 == 3){
+
+                            System.out.print("Select Category: ");
+
+                            System.out.println("1. Beverages");
+                            System.out.println("2. Snacks");
+                            System.out.println("3. Meals");
+
+                            System.out.print("Enter Your Choice: ");
+                            int choice3 = scanner.nextInt();
+
+                            if(choice3 > 3 || choice3 < 1){
+                                System.out.println("Invalid Choice");
+                            }
+
+                            else{
+                                int ind = choice3 - 1;
+
+                                if(Menu_Item.menu_list.get(ind).size() == 0){
+                                    System.out.print("No items to display");
+                                }
+
+                                else{
+                                    for(int i = 0; i<Menu_Item.menu_list.get(ind).size(); i++){
+                                        System.out.println(i+1 + ". " + Menu_Item.menu_list.get(ind).get(i).getName());
+                                    }
+
+                                    System.out.print("Select Item to remove: ");
+                                    int choice4 = scanner.nextInt();
+
+                                    Menu_Item.menu_list.get(ind).remove(choice4-1);
+
+                                    System.out.print("Item has been successfully removed!");
+                                }
+                            }
 
                         }
 
@@ -87,6 +196,7 @@ public class Admin implements User{
                         System.out.print("Enter Your Choice: ");
 
                         int choice2 = scanner.nextInt();
+
                         if(choice2 == 1){
 
                         }
@@ -114,7 +224,7 @@ public class Admin implements User{
                 }
 
                 else if(choice == 3){
-
+                    // report
                 }
 
                 else if(choice == 4){
