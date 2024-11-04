@@ -359,14 +359,22 @@ public class Customer implements User{
                                     System.out.println("Cart Total Payable: Rs." + total);
 
                                     System.out.println("Enter UPI ID: ");
-
                                     String UPI_ID = scanner.nextLine();
 
                                     System.out.println("Enter Address: ");
-
                                     String address = scanner.nextLine();
 
                                     Order ordr = new Order(current_user.Cart);
+
+                                    System.out.print("Do you have any special requests for your order(y/n): ");
+                                    String ch = scanner.nextLine();
+
+                                    if(ch.toLowerCase().equals("y")){
+                                        System.out.print("Enter request: ");
+                                        String request = scanner.nextLine();
+
+                                        ordr.Set_special_req(request);
+                                    }
 
                                     current_user.order_list.add(ordr);
 
