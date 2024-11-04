@@ -22,6 +22,20 @@ public class Customer implements User{
         this.vip = vip;
     }
 
+    public static void displayCatMenu_Reverse(int ind){
+        if(Menu_Item.menu_list.get(ind).size() == 0) {
+            System.out.print("No items to display");
+        }
+
+        else{
+            for(int i = Menu_Item.menu_list.get(ind).size()-1; i>= 0; i++) {
+                System.out.println(i + 1 + ". " + Menu_Item.menu_list.get(ind).get(i).getName() + ": " + Menu_Item.menu_list.get(ind).get(i).getPrice());
+            }
+        }
+
+        System.out.println();
+    }
+
     public static void displayCatMenu(int ind){
         if(Menu_Item.menu_list.get(ind).size() == 0) {
             System.out.print("No items to display");
@@ -152,7 +166,8 @@ public class Customer implements User{
                                 System.out.println("1. View Entire Menu");
                                 System.out.println("2. View Menu by Category");
                                 System.out.println("3. Search Menu");
-                                System.out.println("4. Back");
+                                System.out.println("4. Sort by price: High to Low");
+                                System.out.println("5. Back");
                                 System.out.print("Enter Choice: ");
 
                                 int choice3 = scanner.nextInt();
@@ -214,6 +229,17 @@ public class Customer implements User{
                                 }
 
                                 else if(choice3 == 4){
+                                    System.out.println("Beverages: ");
+                                    displayCatMenu_Reverse(0);
+
+                                    System.out.println("Snacks: ");
+                                    displayCatMenu_Reverse(1);
+
+                                    System.out.println("Meals: ");
+                                    displayCatMenu_Reverse(2);
+                                }
+
+                                else if(choice3 == 5){
                                     break;
                                 }
 
