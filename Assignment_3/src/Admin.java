@@ -1,3 +1,4 @@
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class Admin implements User{
@@ -85,6 +86,7 @@ public class Admin implements User{
                                 Product prod = new Product(itemName, price);
 
                                 Menu_Item.menu_list.get(ind).add(prod);
+                                Menu_Item.menu_list.get(ind).sort(Comparator.comparingDouble(Product::getPrice));
 
                                 System.out.print("Item has been successfully added!");
                             }

@@ -4,21 +4,23 @@ class Review<T> {
 
     public List<T> reviews;
 
+
+
     public Product product;
-    public String student_name;
+    public String cust_name;
 
     public Review(Product product, String name) {
-        this.student_name = name;
+        this.cust_name = name;
         this.product = product;
         reviews = new ArrayList<>();
     }
 
-    public void addFeedback(T feedback) {
-        reviews.add(feedback);
+    public void addReview(T review) {
+        reviews.add(review);
     }
 
-    public void viewFeedback() {
-        System.out.println("Name: " + student_name + "\nProduct: " + product.name);
+    public void viewReviews() {
+        System.out.println("Name: " + cust_name + "\nProduct: " + product.name);
         for (T rev : reviews) {
             System.out.println(rev);
         }

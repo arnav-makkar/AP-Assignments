@@ -11,7 +11,7 @@ public class Main {
         User.admin_list.add(admin1);
         User.admin_list.add(admin2);
 
-        Customer cust1 = new Customer("Arvind", "Arvind123");
+        Customer cust1 = new Customer("a", "1");
         Customer cust2 = new Customer("Aditya", "Aditya123");
 
         User.cust_list.add(cust1);
@@ -25,11 +25,16 @@ public class Main {
         Product tea = new Product("Tea",10);
         Product samosa = new Product("Samosa",20);
         Product rajma = new Product("Rajma Chawal",100);
+        Product chhole = new Product("Chhole Chawal",120);
 
         Menu_Item.menu_list.get(0).add(coffee);
         Menu_Item.menu_list.get(0).add(tea);
+        Menu_Item.menu_list.get(0).sort(Comparator.comparingDouble(Product::getPrice));
         Menu_Item.menu_list.get(1).add(samosa);
+        Menu_Item.menu_list.get(1).sort(Comparator.comparingDouble(Product::getPrice));
         Menu_Item.menu_list.get(2).add(rajma);
+        Menu_Item.menu_list.get(2).add(chhole);
+        Menu_Item.menu_list.get(2).sort(Comparator.comparingDouble(Product::getPrice));
 
         while(true) {
             System.out.println("Welcome to Byte Me!");

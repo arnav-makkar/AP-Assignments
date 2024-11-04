@@ -6,7 +6,9 @@ public class Customer implements User{
     private String name;
     private String password;
     private static LinkedHashMap<Product, Integer> Cart = new LinkedHashMap<>();
-    static ArrayList<Order> cust_order = new ArrayList<>();
+    static ArrayList<Order> order_list = new ArrayList<>();
+
+    private Set<Product> products_ordered = new HashSet<>();
 
     Customer(String name, String password){
         this.name = name;
@@ -21,34 +23,50 @@ public class Customer implements User{
     }
 
     public static void displayCatMenu(int ind){
-        for(int i = 0; i < Menu_Item.menu_list.get(ind).size(); i++) {
-            System.out.println(i + 1 + ". " + Menu_Item.menu_list.get(ind).get(i).getName() + ": " + Menu_Item.menu_list.get(ind).get(i).getPrice());
+        if(Menu_Item.menu_list.get(ind).size() == 0) {
+            System.out.print("No items to display");
         }
+
+        else{
+            for(int i = 0; i < Menu_Item.menu_list.get(ind).size(); i++) {
+                System.out.println(i + 1 + ". " + Menu_Item.menu_list.get(ind).get(i).getName() + ": " + Menu_Item.menu_list.get(ind).get(i).getPrice());
+            }
+        }
+
+        System.out.println();
     }
 
     public static void printCart(Customer current_user){
-        System.out.printf("%-5s %-15s %-10s %-10s%n", "S.No.", "Product", "Quantity", "Price");
 
-        int i = 1;
-        for(Map.Entry<Product, Integer> entry : current_user.Cart.entrySet()) {
-            Product product = entry.getKey();
-            int quantity = entry.getValue();
-            double price = product.getPrice();
-
-            System.out.printf("%-5d %-15s %-10d Rs. %-10.2f%n", i, product.getName(), quantity, price);
-            i++;
+        if (current_user.Cart.isEmpty()){
+            System.out.println("No items to display");
         }
+
+        else{
+            System.out.printf("%-5s %-15s %-10s %-10s%n", "S.No.", "Product", "Quantity", "Price");
+
+            int i = 1;
+            for(Map.Entry<Product, Integer> entry : current_user.Cart.entrySet()) {
+                Product product = entry.getKey();
+                int quantity = entry.getValue();
+                double price = product.getPrice();
+
+                System.out.printf("%-5d %-15s %-10d Rs. %-10.2f%n", i, product.getName(), quantity, price);
+                i++;
+            }
+        }
+        System.out.println();
     }
 
     public static int calculateCartTotal(Customer current_user){
         int total = 0;
 
         for (Map.Entry<Product, Integer> entry : current_user.Cart.entrySet()) {
-            Product item = entry.getKey();   // Get the item (key)
-            int quantity = entry.getValue();  // Get the quantity (value)
-            double price = item.getPrice();   // Assuming MenuItem has a getPrice() method
+            Product item = entry.getKey();
+            int quantity = entry.getValue();
+            double price = item.getPrice();
 
-            total += quantity * price;        // Add quantity * price to the total
+            total += quantity * price;
         }
 
         return total;
@@ -130,29 +148,77 @@ public class Customer implements User{
 
                         if(choice2 == 1){
 
-                            System.out.print("Select Category: \n");
+                            while(true){
+                                System.out.println("1. View Entire Menu");
+                                System.out.println("2. View Menu by Category");
+                                System.out.println("3. Search Menu");
+                                System.out.println("4. Back");
+                                System.out.print("Enter Choice: ");
 
-                            System.out.println("1. Beverages");
-                            System.out.println("2. Snacks");
-                            System.out.println("3. Meals");
+                                int choice3 = scanner.nextInt();
+                                scanner.nextLine();
 
-                            System.out.print("Enter Your Choice: ");
-                            int choice3 = scanner.nextInt();
+                                if(choice3 == 1){
+                                    System.out.println("Beverages: ");
+                                    displayCatMenu(0);
 
-                            if(choice3 > 3 || choice3 < 1){
-                                System.out.println("Invalid Choice");
-                            }
+                                    System.out.println("Snacks: ");
+                                    displayCatMenu(1);
 
-                            else {
-                                int ind = choice3 - 1;
+                                    System.out.println("Meals: ");
+                                    displayCatMenu(2);
+                                }
 
-                                if(Menu_Item.menu_list.get(ind).size() == 0) {
-                                    System.out.print("No items to display");
+                                else if(choice3 == 2){
+                                    System.out.print("Select Category: \n");
+
+                                    System.out.println("1. Beverages");
+                                    System.out.println("2. Snacks");
+                                    System.out.println("3. Meals");
+
+                                    System.out.print("Enter Your Choice: ");
+                                    int choice4 = scanner.nextInt();
+
+                                    if(choice4 > 3 || choice4 < 1){
+                                        System.out.println("Invalid Choice");
+                                    }
+
+                                    else {
+                                        int ind = choice4 - 1;
+                                        displayCatMenu(ind);
+                                    }
+                                }
+
+                                else if(choice3 == 3){
+                                    System.out.print("Enter Keyword: ");
+                                    String key = scanner.nextLine();
+
+                                    key = key.toLowerCase(Locale.ROOT);
+                                    int flag1 = 0;
+
+                                    for(int j = 0; j<3; j++){
+                                        for(int i = 0; i<Menu_Item.menu_list.get(j).size(); i++){
+                                            if((Menu_Item.menu_list.get(j).get(i).getName().toLowerCase(Locale.ROOT).contains(key))){
+
+                                                flag1 = 1;
+                                                System.out.println("Product Name: " + Menu_Item.menu_list.get(j).get(i).getName());
+                                                System.out.println("Product Price: " + Menu_Item.menu_list.get(j).get(i).getPrice() + "\n");
+
+                                            }
+                                        }
+                                    }
+
+                                    if(flag1 == 0){
+                                        System.out.println("No results found\n");
+                                    }
+                                }
+
+                                else if(choice3 == 4){
+                                    break;
                                 }
 
                                 else{
-                                    displayCatMenu(ind);
-                                    System.out.println();
+                                    System.out.println("Invalid Choice");
                                 }
                             }
                         }
@@ -162,21 +228,17 @@ public class Customer implements User{
                                 System.out.println("1. View Cart");
                                 System.out.println("2. Add Items to Cart");
                                 System.out.println("3. Remove Item from Cart");
-                                System.out.println("4. View Total");
-                                System.out.println("5. Checkout");
-                                System.out.println("6. Back");
+                                System.out.println("4. Modify Quantities");
+                                System.out.println("5. View Total");
+                                System.out.println("6. Checkout");
+                                System.out.println("7. Back");
 
                                 System.out.print("Enter Your Choice: ");
                                 int choice3 = scanner.nextInt();
                                 scanner.nextLine();
 
                                 if(choice3 == 1){
-                                    if (current_user.Cart.isEmpty()){
-                                        System.out.println("No items to display");
-                                    }
-                                    else{
-                                        printCart(current_user);
-                                    }
+                                    printCart(current_user);
                                 }
 
                                 else if(choice3 == 2){
@@ -226,35 +288,61 @@ public class Customer implements User{
                                 }
 
                                 else if(choice3 == 3){
-                                    if (current_user.Cart.isEmpty()){
-                                        System.out.println("No items to display");
+                                    printCart(current_user);
+
+                                    System.out.print("Select item to remove: ");
+                                    int item_ind = scanner.nextInt();
+                                    scanner.nextLine();
+
+                                    List<Product> items = new ArrayList<>(current_user.Cart.keySet());
+
+                                    if (item_ind > 0 && item_ind <= items.size()) {
+                                        Product itemToRemove = items.get(item_ind - 1);
+                                        current_user.Cart.remove(itemToRemove);
+                                        System.out.println("Item removed successfully.");
                                     }
+
                                     else{
-                                        printCart(current_user);
-
-                                        System.out.print("Select item to remove: ");
-                                        int item_ind = scanner.nextInt();
-                                        scanner.nextLine();
-
-                                        List<Product> items = new ArrayList<>(current_user.Cart.keySet());
-
-                                        if (item_ind > 0 && item_ind <= items.size()) {
-                                            Product itemToRemove = items.get(item_ind - 1); // Convert 1-based index to 0-based
-                                            current_user.Cart.remove(itemToRemove);          // Remove item from the LinkedHashMap
-                                            System.out.println("Item removed successfully.");
-                                        }
-
-                                        else{
-                                            System.out.println("Invalid item selection.");
-                                        }
+                                        System.out.println("Invalid item selection.");
                                     }
                                 }
 
                                 else if(choice3 == 4){
 
-                                    int total = calculateCartTotal(current_user);
+                                    printCart(current_user);
 
-                                    System.out.println("Cart Total Payable: Rs." + total);
+                                    System.out.print("Select item to modify quantity: ");
+                                    int item_ind = scanner.nextInt();
+                                    scanner.nextLine();
+
+                                    List<Product> items = new ArrayList<>(current_user.Cart.keySet());
+
+                                    if (item_ind > 0 && item_ind <= items.size()) {
+                                        Product itemToUpdate = items.get(item_ind - 1);
+
+                                        System.out.print("Enter New Quantity: ");
+
+                                        int new_quantity = scanner.nextInt();
+                                        scanner.nextLine();
+
+                                        if (new_quantity > 0) {
+                                            current_user.Cart.put(itemToUpdate, new_quantity);
+                                            System.out.println("Quantity updated successfully.");
+                                        }
+
+                                        else if (new_quantity == 0) {
+                                            current_user.Cart.remove(itemToUpdate);
+                                            System.out.println("Item removed from the cart.");
+                                        }
+
+                                        else{
+                                            System.out.println("Invalid quantity. Must be 0 or greater.");
+                                        }
+                                    }
+
+                                    else{
+                                        System.out.println("Invalid item selection.");
+                                    }
                                 }
 
                                 else if(choice3 == 5){
@@ -262,21 +350,32 @@ public class Customer implements User{
                                     int total = calculateCartTotal(current_user);
 
                                     System.out.println("Cart Total Payable: Rs." + total);
+                                }
+
+                                else if(choice3 == 6){
+
+                                    int total = calculateCartTotal(current_user);
+
+                                    System.out.println("Cart Total Payable: Rs." + total);
 
                                     System.out.println("Enter UPI ID: ");
-                                    scanner.nextLine();
+
                                     String UPI_ID = scanner.nextLine();
 
                                     System.out.println("Enter Address: ");
-                                    scanner.nextLine();
+
                                     String address = scanner.nextLine();
 
                                     Order ordr = new Order(current_user.Cart);
 
-                                    current_user.cust_order.add(ordr);
+                                    current_user.order_list.add(ordr);
+
+                                    current_user.products_ordered.addAll(current_user.Cart.keySet());
 
                                     if(current_user.vip){
                                         Order.order_list.add(ordr);
+
+                                        // active order queue vs total order arraylist
                                     }
                                     else{
                                         Order.vip_order_list.add(ordr);
@@ -285,7 +384,7 @@ public class Customer implements User{
                                     System.out.println("Order Successful!");
                                 }
 
-                                else if(choice3 == 6){
+                                else if(choice3 == 7){
                                     break;
                                 }
 
@@ -308,28 +407,30 @@ public class Customer implements User{
                                 scanner.nextLine();
 
                                 if(choice3 == 1){
-                                    System.out.println("Order Status: " + current_user.cust_order.getLast().getStatus());
+                                    System.out.println("Order Status: " + current_user.order_list.getLast().getStatus());
                                 }
 
                                 else if(choice3 == 2){
-                                    current_user.cust_order.getLast().setStatus(3);
+                                    current_user.order_list.getLast().setStatus(3);
 
-                                    System.out.println("Your order has been cancelled!");
+                                    System.out.println("Your order has been cancelled! Refund will be initiated shortly");
                                 }
 
                                 else if(choice3 == 3){
 
-                                    if(current_user.cust_order.isEmpty()){
+                                    if(current_user.order_list.isEmpty()){
                                         System.out.println("No items to display");
                                     }
 
                                     else{
-                                        for (int i = 0; i < current_user.cust_order.size(); i++){
+                                        for (int i = 0; i < current_user.order_list.size(); i++){
+
+                                            System.out.println(i+1);
 
                                             System.out.printf("%-5s %-15s %-10s %-10s%n", "S.No.", "Product", "Quantity", "Price");
 
                                             int j = 1;
-                                            Map<Product, Integer> order = current_user.cust_order.get(i).getOrder();
+                                            Map<Product, Integer> order = current_user.order_list.get(i).getOrder();
                                             for(Map.Entry<Product, Integer> entry : order.entrySet()) {
                                                 Product product = entry.getKey();
                                                 int quantity = entry.getValue();
@@ -337,6 +438,16 @@ public class Customer implements User{
 
                                                 System.out.printf("%-5d %-15s %-10d $%-10.2f%n", j, product.getName(), quantity, price);
                                                 j++;
+                                            }
+
+                                            System.out.print("Select order number to reorder. 0 to skip: ");
+                                            int ch = scanner.nextInt();
+                                            scanner.nextLine();
+
+                                            if(ch != 0){
+                                                current_user.Cart = current_user.order_list.get(ch-1).getOrder();
+
+                                                System.out.println("Your selection has been added to Cart!");
                                             }
                                         }
 
@@ -356,7 +467,81 @@ public class Customer implements User{
                         }
 
                         else if(choice2 == 4){
-                            // review
+
+                            while(true){
+                                System.out.println("1. View Reviews");
+                                System.out.println("2. Provide Review");
+                                System.out.println("3. Back");
+                                System.out.print("Enter Your Choice: ");
+
+                                int choice3 = scanner.nextInt();
+                                scanner.nextLine();
+
+                                if(choice3 == 1){
+                                    if(Menu_Item.reviews_list.isEmpty()){
+                                        System.out.println("No reviews to display");
+                                    }
+
+                                    else{
+                                        for(int i = 0; i<Menu_Item.reviews_list.size(); i++){
+                                            Menu_Item.reviews_list.get(i).viewReviews();
+                                        }
+                                    }
+                                }
+
+                                else if(choice3 == 2){
+                                    if(current_user.products_ordered.isEmpty()){
+                                        System.out.println("You cannot review without ordering");
+                                    }
+
+                                    else{
+                                        System.out.println("Select item to review");
+                                        int index = 1;
+                                        for (Product product : current_user.products_ordered) {
+                                            System.out.println(index + ". " + product.getName());
+                                            index++;
+                                        }
+
+                                        System.out.print("Enter Choice: ");
+                                        int choice4 = scanner.nextInt();
+                                        scanner.nextLine();
+
+                                        List<Product> productList = new ArrayList<>(current_user.products_ordered);
+
+                                        if (choice4 > 0 && choice4 <= productList.size()) {
+                                            Product itemToReview = productList.get(choice4 - 1);
+
+                                            System.out.print("Give Star Rating: ");
+                                            Integer starRating = scanner.nextInt();
+                                            scanner.nextLine();
+
+                                            System.out.print("Give Review: ");
+                                            String reviewText = scanner.nextLine();
+
+                                            Review<Object> review = new Review<>(itemToReview, current_user.getUserName());
+
+                                            review.addReview(starRating);
+                                            review.addReview(reviewText);
+
+                                            Menu_Item.reviews_list.add(review);
+
+                                            System.out.println("Your review has been recorded!\n");
+                                        }
+
+                                        else{
+                                            System.out.println("Invalid choice. Please select a valid item number.");
+                                        }
+                                    }
+                                }
+
+                                else if(choice3 == 3){
+                                    break;
+                                }
+
+                                else {
+                                    System.out.println("Invalid Choice");
+                                }
+                            }
                         }
 
                         else if(choice2 == 5){
@@ -424,11 +609,11 @@ public class Customer implements User{
 
     @Override
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     @Override
     public String getUserName() {
-        return name;
+        return this.name;
     }
 }
