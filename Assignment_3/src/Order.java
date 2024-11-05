@@ -9,7 +9,7 @@ public class Order {
     private String status;
     private LinkedHashMap<Product, Integer> order;
     private String special_req;
-    static ArrayList<String> status_list = new ArrayList<>(Arrays.asList("Order Received", "Preparing", "Out for Delivery", "Order Cancelled", "Refund Initiated", "Order Denied"));
+    static ArrayList<String> status_list = new ArrayList<>(Arrays.asList("Order Received", "Preparing", "Out for Delivery", "Order Cancelled", "Refund Initiated", "Order Denied", "Order Delivered"));
     private Customer customer;
 
     Order(LinkedHashMap<Product, Integer> order, Customer customer){

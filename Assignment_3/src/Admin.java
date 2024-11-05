@@ -1,6 +1,4 @@
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class Admin implements User{
 
@@ -249,6 +247,7 @@ public class Admin implements User{
                                 System.out.println("Select Order Status");
                                 System.out.println("1. Preparing");
                                 System.out.println("2. Out for Delivery");
+                                System.out.println("3. Delivered");
                                 System.out.print("Enter Your Choice: ");
                                 int choice3 = scanner.nextInt();
                                 scanner.nextLine();
@@ -263,7 +262,12 @@ public class Admin implements User{
                                     System.out.println("Order Status has been updated!");
                                 }
 
-                                else if(choice3 != 1 && choice3 != 2){
+                                else if(choice3 == 3){
+                                    order.setStatus(6);
+                                    System.out.println("Order Status has been updated!");
+                                }
+
+                                else if(choice3 != 1 && choice3 != 2 && choice3 != 3){
                                     System.out.println("Invalid Choice");
                                 }
                             }
