@@ -9,8 +9,6 @@ public class Menu_Item {
 
     public static ArrayList<Review> reviews_list;
 
-    // sort the above three always by getPrice() method. ascending
-
     static ArrayList<ArrayList<Product>> menu_list = new ArrayList<>(
             Arrays.asList(beverage_list, snacks_list, meals_list)
     );

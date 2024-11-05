@@ -1,4 +1,5 @@
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Admin implements User{
@@ -166,13 +167,28 @@ public class Admin implements User{
                                     System.out.print("Select Item to remove: ");
                                     int choice4 = scanner.nextInt();
 
-                                    Menu_Item.menu_list.get(ind).get(choice4-1).setIs_avaliable(false);
+                                    Product item = Menu_Item.menu_list.get(ind).get(choice4-1);
+
+                                    item.setIs_avaliable(false);
                                     Menu_Item.menu_list.get(ind).remove(choice4-1);
 
                                     System.out.print("Item has been successfully removed!");
+
+                                    for (Order i : Order.vip_active_orders) {
+                                        if(i.getOrder().containsKey(item)){
+                                            i.setStatus(5);
+                                            Order.vip_active_orders.remove(i);
+                                        }
+                                    }
+
+                                    for (Order i : Order.regular_active_orders) {
+                                        if(i.getOrder().containsKey(item)){
+                                            i.setStatus(5);
+                                            Order.regular_active_orders.remove(i);
+                                        }
+                                    }
                                 }
                             }
-
                         }
 
                         else if(choice2 == 4){
@@ -198,18 +214,118 @@ public class Admin implements User{
 
                         if(choice2 == 1){
 
+                            int cnt = 1;
+
+                            for (Order i : Order.vip_active_orders) {
+                                System.out.println(cnt + ". ");
+                                i.printOrder();
+                                cnt++;
+                            }
+
+                            for (Order i : Order.regular_active_orders) {
+                                System.out.println(cnt + ". ");
+                                i.printOrder();
+                                cnt++;
+                            }
                         }
 
                         else if(choice2 == 2){
 
+                            if(Order.vip_active_orders.isEmpty() && Order.regular_active_orders.isEmpty()){
+                                System.out.println("No active orders");
+                            }
+
+                            else{
+                                Order order = null;
+
+                                if(!Order.vip_active_orders.isEmpty()){
+                                    order = Order.vip_active_orders.peek();
+                                }
+
+                                else{
+                                    order = Order.regular_active_orders.peek();
+                                }
+
+                                System.out.println("Select Order Status");
+                                System.out.println("1. Preparing");
+                                System.out.println("2. Out for Delivery");
+                                System.out.print("Enter Your Choice: ");
+                                int choice3 = scanner.nextInt();
+                                scanner.nextLine();
+
+                                if(choice3 == 1){
+                                    order.setStatus(1);
+                                    System.out.println("Order Status has been updated!");
+                                }
+
+                                else if(choice3 == 2){
+                                    order.setStatus(2);
+                                    System.out.println("Order Status has been updated!");
+                                }
+
+                                else if(choice3 != 1 && choice3 != 2){
+                                    System.out.println("Invalid Choice");
+                                }
+                            }
                         }
 
                         else if(choice2 == 3){
 
+                            System.out.println("Orders cancelled by Customer: ");
+
+                            int cnt = 1;
+
+                            for (Order i : Order.vip_active_orders) {
+                                if(Objects.equals(i.getStatus(), Order.status_list.get(3))){
+                                    System.out.println(cnt + ". ");
+                                    i.setStatus(4);
+                                    Order.vip_active_orders.remove(i);
+                                    cnt++;
+                                }
+                            }
+
+                            for (Order i : Order.regular_active_orders) {
+                                if(Objects.equals(i.getStatus(), Order.status_list.get(3))){
+                                    System.out.println(cnt + ". ");
+                                    i.setStatus(4);
+                                    Order.regular_active_orders.remove(i);
+                                    cnt++;
+                                }
+                            }
+
+                            if(cnt == 1) System.out.println("Not Found");
+
+                            else{
+                                System.out.println("Order status changed to 'Refund Initiated'");
+                                System.out.println("Order removed from active orders");
+                            }
                         }
 
                         else if(choice2 == 4){
 
+                            System.out.println("Active Orders with Special Requests: ");
+
+                            int cnt = 1;
+
+                            for (Order i : Order.vip_active_orders) {
+                                if(i.Get_special_req() != null){
+                                    System.out.println(cnt + ". ");
+                                    i.printOrder();
+                                    i.Get_special_req();
+                                    cnt++;
+                                }
+                            }
+
+                            for (Order i : Order.regular_active_orders) {
+                                if(i.Get_special_req() != null){
+                                    System.out.println(cnt + ". ");
+                                    i.printOrder();
+                                    i.Get_special_req();
+                                    cnt++;
+                                }
+                            }
+
+                            if(cnt == 1) System.out.println("Not Found");
                         }
 
                         else if(choice2 == 5){
@@ -232,7 +348,7 @@ public class Admin implements User{
                     // calc tot sales
                     // calc mpi
 
-                    System.out.println("Total Orders: " + Order.vip_order_list.size()+Order.order_list.size());
+                    System.out.println("Total Orders: " + Order.vip_active_orders.size()+Order.regular_active_orders.size());
                     System.out.println("Total Sales: " + total_sales);
                     System.out.println("Most Popular Product: " + item.getName());
                 }

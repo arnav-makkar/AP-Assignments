@@ -390,7 +390,7 @@ public class Customer implements User{
                                     System.out.println("Enter Address: ");
                                     String address = scanner.nextLine();
 
-                                    Order ordr = new Order(current_user.Cart);
+                                    Order ordr = new Order(current_user.Cart, current_user);
 
                                     System.out.print("Do you have any special requests for your order(y/n): ");
                                     String ch = scanner.nextLine();
@@ -407,13 +407,13 @@ public class Customer implements User{
                                     current_user.products_ordered.addAll(current_user.Cart.keySet());
 
                                     if(current_user.vip){
-                                        Order.order_list.add(ordr);
-
-                                        // active order queue vs total order arraylist
+                                        Order.regular_active_orders.add(ordr);
                                     }
                                     else{
-                                        Order.vip_order_list.add(ordr);
+                                        Order.vip_active_orders.add(ordr);
                                     }
+
+                                    Order.all_orders.add(ordr);
 
                                     System.out.println("Order Successful!");
                                 }
