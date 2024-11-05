@@ -377,7 +377,6 @@ public class Admin implements User{
                     System.out.println("\nDaily Sales Report\n");
 
                     int total_sales = 0;
-                    Product maxf = null;
 
                     for(Order i : Order.all_orders){
                         if(i.getStatus() != Order.status_list.get(3) && i.getStatus() != Order.status_list.get(4) && i.getStatus() != Order.status_list.get(5)){

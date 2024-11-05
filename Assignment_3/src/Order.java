@@ -39,36 +39,6 @@ public class Order {
         }
     }
 
-    public void getMaxF(){
-        Map<Product, Integer> productCountMap = new HashMap<>();
-
-        for (Order order : all_orders) {
-            for (Map.Entry<Product, Integer> entry : order.getOrder().entrySet()) {
-                Product product = entry.getKey();
-                int quantity = entry.getValue();
-
-                productCountMap.put(product, productCountMap.getOrDefault(product, 0) + quantity);
-            }
-        }
-
-        Product mostOrderedProduct = null;
-        int maxQuantity = 0;
-
-        for (Map.Entry<Product, Integer> entry : productCountMap.entrySet()) {
-            if (entry.getValue() > maxQuantity) {
-                maxQuantity = entry.getValue();
-                mostOrderedProduct = entry.getKey();
-            }
-        }
-
-        if (mostOrderedProduct != null){
-            System.out.println("Most ordered product: " + mostOrderedProduct.getName() + " with quantity: " + maxQuantity);
-        }
-        else {
-            System.out.println("Most ordered product: No products found.");
-        }
-    }
-
     public void Set_special_req(String special_req){
         this.special_req = special_req;
     }

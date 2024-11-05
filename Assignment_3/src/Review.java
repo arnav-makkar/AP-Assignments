@@ -4,8 +4,6 @@ class Review<T> {
 
     public List<T> reviews;
 
-
-
     public Product product;
     public String cust_name;
 

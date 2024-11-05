@@ -1,11 +1,7 @@
-import java.util.ArrayList;
-
 public class Product extends Menu_Item{
 
     private double price;
     private boolean is_avaliable;
-
-
 
     Product(String name, double price) {
         super(name);
