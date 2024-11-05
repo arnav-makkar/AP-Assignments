@@ -10,6 +10,36 @@ public class Admin implements User{
         this.password = password;
     }
 
+    public static void getMaxF(){
+        Map<Product, Integer> productCountMap = new HashMap<>();
+
+        for (Order order : Order.all_orders) {
+            for (Map.Entry<Product, Integer> entry : order.getOrder().entrySet()) {
+                Product product = entry.getKey();
+                int quantity = entry.getValue();
+
+                productCountMap.put(product, productCountMap.getOrDefault(product, 0) + quantity);
+            }
+        }
+
+        Product mostOrderedProduct = null;
+        int maxQuantity = 0;
+
+        for (Map.Entry<Product, Integer> entry : productCountMap.entrySet()) {
+            if (entry.getValue() > maxQuantity) {
+                maxQuantity = entry.getValue();
+                mostOrderedProduct = entry.getKey();
+            }
+        }
+
+        if (mostOrderedProduct != null){
+            System.out.println("Most ordered product: " + mostOrderedProduct.getName() + " with quantity: " + maxQuantity);
+        }
+        else {
+            System.out.println("Most ordered product: No products found.");
+        }
+    }
+
     public static void main(String[] args){
 
         Scanner scanner = new Scanner(System.in);
@@ -347,14 +377,27 @@ public class Admin implements User{
                     System.out.println("\nDaily Sales Report\n");
 
                     int total_sales = 0;
-                    Product item = null;
+                    Product maxf = null;
 
-                    // calc tot sales
-                    // calc mpi
+                    for(Order i : Order.all_orders){
+                        if(i.getStatus() != Order.status_list.get(3) && i.getStatus() != Order.status_list.get(4) && i.getStatus() != Order.status_list.get(5)){
+                            int temp = 0;
 
-                    System.out.println("Total Orders: " + Order.vip_active_orders.size()+Order.regular_active_orders.size());
+                            for (Map.Entry<Product, Integer> entry : i.getOrder().entrySet()) {
+                                Product prod = entry.getKey();
+                                int quantity = entry.getValue();
+                                double price = prod.getPrice();
+
+                                temp += quantity * price;
+                            }
+
+                            total_sales = temp;
+                        }
+                    }
+
+                    System.out.println("Total Orders: " + Order.all_orders.size());
                     System.out.println("Total Sales: " + total_sales);
-                    System.out.println("Most Popular Product: " + item.getName());
+                    getMaxF();
                 }
 
                 else if(choice == 4){
