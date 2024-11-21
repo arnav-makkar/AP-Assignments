@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 
 public class Customer implements User{
@@ -108,23 +109,54 @@ public class Customer implements User{
                 System.out.print("Set Password: ");
                 String password = scanner.nextLine();
 
-                int flag = 0;
+                /*
                 for(int i = 0; i < User.cust_list.size(); i++) {
                     if (User.cust_list.get(i).getUserName().equals(name) && User.cust_list.get(i).getPassword().equals(password)) {
                         flag = 1;
                         break;
                     }
                 }
+                 */
+
+                int flag = 0;
+
+                try (BufferedReader br = new BufferedReader(new FileReader("user_list.csv"))) {
+                    br.readLine();
+
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        String[] userDetails = line.split(",");
+
+                        if (userDetails.length >= 2) {
+                            String file_name = userDetails[0].trim();
+                            String file_password = userDetails[1].trim();
+
+                            if (file_name.equals(name) && file_password.equals(password)) {
+                                flag = 1;
+                                break;
+                            }
+                        }
+                    }
+                }
+                catch (IOException e) {
+                    System.err.println("Error reading the CSV file: " + e.getMessage());
+                }
 
                 if (flag == 0){
                     Customer cust = new Customer(name, password);
                     cust_list.add(cust);
                     System.out.println("User successfully registered");
+
+                    try (PrintWriter writer = new PrintWriter(new FileWriter("user_list.csv", true))) {
+                        writer.printf("%s, %s%n", name, password);
+                    }
+                    catch (IOException e) {
+                        System.err.println("An error occurred while writing to the file: " + e.getMessage());
+                    }
                 }
                 else{
                     System.out.println("User already exists, please login");
                 }
-
             }
 
             else if(choice == 2){
@@ -134,14 +166,40 @@ public class Customer implements User{
                 System.out.print("Set Password: ");
                 String password = scanner.nextLine();
 
-
-                int flag = 0;
                 Customer current_user = null;
+                int flag = 0;
+
                 for(int i = 0; i < User.cust_list.size(); i++) {
                     if (User.cust_list.get(i).getUserName().equals(name) && User.cust_list.get(i).getPassword().equals(password)) {
                         flag = 1;
                         current_user = User.cust_list.get(i);
                         break;
+                    }
+                }
+
+                if(flag == 0){
+                    try (BufferedReader br = new BufferedReader(new FileReader("user_list.csv"))) {
+                        br.readLine();
+
+                        String line;
+                        while ((line = br.readLine()) != null) {
+                            String[] userDetails = line.split(",");
+
+                            if (userDetails.length >= 2) {
+                                String file_name = userDetails[0].trim();
+                                String file_password = userDetails[1].trim();
+
+                                if (file_name.equals(name) && file_password.equals(password)) {
+                                    flag = 1;
+
+                                    current_user = new Customer(name, password);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    catch (IOException e) {
+                        System.err.println("Error reading the CSV file: " + e.getMessage());
                     }
                 }
 
@@ -391,6 +449,23 @@ public class Customer implements User{
                                     String address = scanner.nextLine();
 
                                     Order ordr = new Order(current_user.Cart, current_user);
+
+                                    try (PrintWriter writer = new PrintWriter(new FileWriter("order_list.csv", true))) {
+                                        boolean firstEntry = true;
+                                        for (Map.Entry<Product, Integer> entry : ordr.getOrder().entrySet()) {
+                                            Product product = entry.getKey();
+                                            int quantity = entry.getValue();
+
+                                            if (!firstEntry) {
+                                                writer.print(" | ");
+                                            }
+                                            writer.printf("%s, %d, %.2f", product.getName(), quantity, product.getPrice());
+                                            firstEntry = false;
+                                        }
+                                    }
+                                    catch (IOException e) {
+                                        System.err.println("An error occurred while writing to the file: " + e.getMessage());
+                                    }
 
                                     System.out.print("Do you have any special requests for your order(y/n): ");
                                     String ch = scanner.nextLine();

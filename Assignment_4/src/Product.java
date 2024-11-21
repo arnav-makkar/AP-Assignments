@@ -16,7 +16,6 @@ public class Product extends Menu_Item{
         this.is_avaliable = true;
     }
 
-
     public String getName() {
         return this.name;
     }

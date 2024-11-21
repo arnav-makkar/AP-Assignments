@@ -12,7 +12,7 @@ public class Main {
         User.admin_list.add(admin2);
 
         Customer cust1 = new Customer("a", "1");
-        Customer cust2 = new Customer("Aditya", "Aditya123");
+        Customer cust2 = new Customer("Arvind", "Arvind123");
 
         User.cust_list.add(cust1);
         User.cust_list.add(cust2);
@@ -41,7 +41,8 @@ public class Main {
 
             System.out.println("1. Login as Customer");
             System.out.println("2. Login as Admin");
-            System.out.println("3. Exit");
+            System.out.println("3. Open GUI");
+            System.out.println("4. Exit");
 
             System.out.print("Enter your choice: ");
 
@@ -56,9 +57,17 @@ public class Main {
                 Admin.main(null);
             }
 
-            else if(choice1 == 3) {
+            else if (choice1 == 3) {
+                Customer.main(null);
+            }
+
+            else if(choice1 == 4) {
                 System.out.println("Exiting!");
                 System.exit(0);
+            }
+
+            else{
+                System.out.println("Invalid choice");
             }
         }
     }
