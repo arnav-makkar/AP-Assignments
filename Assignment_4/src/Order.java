@@ -39,6 +39,34 @@ public class Order {
         }
     }
 
+    public String printOrderString() {
+        StringBuilder orderDetails = new StringBuilder();
+
+        String orderType = customer.vip ? "VIP" : "Regular";
+
+        orderDetails.append("Customer Name: ").append(customer.getUserName()).append("\n");
+        orderDetails.append("Order Type: ").append(orderType).append("\n");
+        orderDetails.append("Order Status: ").append(status).append("\n");
+        orderDetails.append("Order Contents: \n");
+
+        // Format the header for the order table
+        orderDetails.append(String.format("%-5s %-15s %-10s%n", "S.No.", "Product", "Quantity"));
+
+        // Add each product to the order details
+        int i = 1;
+        for (Map.Entry<Product, Integer> entry : order.entrySet()) {
+            Product product = entry.getKey();
+            int quantity = entry.getValue();
+
+            // Format the product details
+            orderDetails.append(String.format("%-5d %-15s %-10d%n", i, product.getName(), quantity));
+            i++;
+        }
+
+        // Return the constructed string
+        return orderDetails.toString();
+    }
+
     public void Set_special_req(String special_req){
         this.special_req = special_req;
     }

@@ -1,3 +1,6 @@
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 public class Main {
@@ -20,6 +23,14 @@ public class Main {
         Customer vip_cust = new Customer("Sarthak", "Sarthak123", true);
 
         User.cust_list.add(vip_cust);
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("customer.txt", true))) {
+            oos.writeObject(cust1);
+            oos.writeObject(cust2);
+            oos.writeObject(vip_cust);
+        } catch (IOException e) {
+            System.err.println("An error occurred while writing to the file: " + e.getMessage());
+        }
 
         Product coffee = new Product("Coffee",20);
         Product tea = new Product("Tea",10);
@@ -58,7 +69,7 @@ public class Main {
             }
 
             else if (choice1 == 3) {
-                Customer.main(null);
+                GUI.main(null);
             }
 
             else if(choice1 == 4) {

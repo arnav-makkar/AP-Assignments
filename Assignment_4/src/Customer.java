@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Customer implements User{
+public class Customer implements User, Serializable {
 
     protected boolean vip;
     private String name;
@@ -21,6 +21,47 @@ public class Customer implements User{
         this.name = name;
         this.password = password;
         this.vip = vip;
+    }
+
+    public static boolean checkUserExists(String name, String password){
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("customer.txt"))) {
+            while (true) {
+                try {
+                    Customer cust = (Customer) ois.readObject();
+
+                    if (cust.getUserName().equals(name) && cust.getPassword().equals(password)) {
+                        return true;
+                    }
+                } catch (IOException | ClassNotFoundException e) {
+                    break;
+                }
+            }
+        }
+        catch (IOException e) {
+            System.err.println("Error reading the serialized file: " + e.getMessage());
+        }
+
+        return false;
+    }
+
+    public static Customer findUser(String name, String password) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("customer.txt"))) {
+            while (true) {
+                try {
+                    Customer cust = (Customer) ois.readObject();
+
+                    if (cust.getUserName().equals(name) && cust.getPassword().equals(password)) {
+                        return cust;
+                    }
+                } catch (IOException | ClassNotFoundException e) {
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading the serialized file: " + e.getMessage());
+        }
+
+        return null;
     }
 
     public static void displayCatMenu_Reverse(int ind){
@@ -49,6 +90,25 @@ public class Customer implements User{
         }
 
         System.out.println();
+    }
+
+    public static String displayCatMenuString(int ind) {
+        StringBuilder menuBuilder = new StringBuilder();
+
+        if (Menu_Item.menu_list.get(ind).size() == 0) {
+            menuBuilder.append("No items to display");
+        } else {
+            for (int i = 0; i < Menu_Item.menu_list.get(ind).size(); i++) {
+                menuBuilder.append(i + 1)
+                        .append(". ")
+                        .append(Menu_Item.menu_list.get(ind).get(i).getName())
+                        .append(": ")
+                        .append(Menu_Item.menu_list.get(ind).get(i).getPrice())
+                        .append("\n");
+            }
+        }
+
+        return menuBuilder.toString();
     }
 
     public static void printCart(Customer current_user){
@@ -103,107 +163,38 @@ public class Customer implements User{
             scanner.nextLine();
 
             if(choice == 1){
-
                 System.out.print("Enter Name: ");
                 String name = scanner.nextLine();
                 System.out.print("Set Password: ");
                 String password = scanner.nextLine();
 
-                /*
-                for(int i = 0; i < User.cust_list.size(); i++) {
-                    if (User.cust_list.get(i).getUserName().equals(name) && User.cust_list.get(i).getPassword().equals(password)) {
-                        flag = 1;
-                        break;
-                    }
-                }
-                 */
-
-                int flag = 0;
-
-                try (BufferedReader br = new BufferedReader(new FileReader("user_list.csv"))) {
-                    br.readLine();
-
-                    String line;
-                    while ((line = br.readLine()) != null) {
-                        String[] userDetails = line.split(",");
-
-                        if (userDetails.length >= 2) {
-                            String file_name = userDetails[0].trim();
-                            String file_password = userDetails[1].trim();
-
-                            if (file_name.equals(name) && file_password.equals(password)) {
-                                flag = 1;
-                                break;
-                            }
-                        }
-                    }
-                }
-                catch (IOException e) {
-                    System.err.println("Error reading the CSV file: " + e.getMessage());
+                if(checkUserExists(name, password)){
+                    System.out.println("User already exists, please login");
                 }
 
-                if (flag == 0){
+                else{
                     Customer cust = new Customer(name, password);
                     cust_list.add(cust);
                     System.out.println("User successfully registered");
 
-                    try (PrintWriter writer = new PrintWriter(new FileWriter("user_list.csv", true))) {
-                        writer.printf("%s, %s%n", name, password);
-                    }
-                    catch (IOException e) {
+                    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("customer.txt", true))) {
+                        oos.writeObject(cust);
+                    } catch (IOException e) {
                         System.err.println("An error occurred while writing to the file: " + e.getMessage());
                     }
-                }
-                else{
-                    System.out.println("User already exists, please login");
                 }
             }
 
             else if(choice == 2){
-
                 System.out.print("Enter Name: ");
                 String name = scanner.nextLine();
                 System.out.print("Set Password: ");
                 String password = scanner.nextLine();
 
-                Customer current_user = null;
-                int flag = 0;
+                if (checkUserExists(name, password)){
 
-                for(int i = 0; i < User.cust_list.size(); i++) {
-                    if (User.cust_list.get(i).getUserName().equals(name) && User.cust_list.get(i).getPassword().equals(password)) {
-                        flag = 1;
-                        current_user = User.cust_list.get(i);
-                        break;
-                    }
-                }
+                    Customer current_user = findUser(name, password);
 
-                if(flag == 0){
-                    try (BufferedReader br = new BufferedReader(new FileReader("user_list.csv"))) {
-                        br.readLine();
-
-                        String line;
-                        while ((line = br.readLine()) != null) {
-                            String[] userDetails = line.split(",");
-
-                            if (userDetails.length >= 2) {
-                                String file_name = userDetails[0].trim();
-                                String file_password = userDetails[1].trim();
-
-                                if (file_name.equals(name) && file_password.equals(password)) {
-                                    flag = 1;
-
-                                    current_user = new Customer(name, password);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    catch (IOException e) {
-                        System.err.println("Error reading the CSV file: " + e.getMessage());
-                    }
-                }
-
-                if (flag == 1){
                     System.out.println("\nHi " + name + "!");
 
                     while(true){

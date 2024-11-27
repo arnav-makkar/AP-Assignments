@@ -197,8 +197,8 @@ public class Admin implements User{
 
                                     Product item = Menu_Item.menu_list.get(ind).get(choice4-1);
 
-                                    item.setIs_avaliable(false);
-                                    Menu_Item.menu_list.get(ind).remove(choice4-1);
+                                    item.setIs_available(false);
+                                    //Menu_Item.menu_list.get(ind).remove(choice4-1);
 
                                     System.out.print("Item has been successfully removed!");
 
