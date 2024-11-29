@@ -186,10 +186,28 @@ public class Customer implements User, Serializable {
                     cust_list.add(cust);
                     System.out.println("User successfully registered");
 
-                    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("customer.txt", true))) {
+//                    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("customer.txt", true))) {
+//                        oos.writeObject(cust);
+//                        System.out.println("reached here");
+//                    } catch (IOException e) {
+//                        System.err.println("An error occurred while writing to the file: " + e.getMessage());
+//                    }
+
+                    try (FileOutputStream fos = new FileOutputStream("customer.txt", true)) {
+                        ObjectOutputStream oos;
+                        if (new File("customer.txt").length() == 0) {
+                            oos = new ObjectOutputStream(fos);
+                        } else {
+                            oos = new ObjectOutputStream(fos) {
+                                @Override
+                                protected void writeStreamHeader() throws IOException {
+                                }
+                            };
+                        }
                         oos.writeObject(cust);
+                        oos.close();
                     } catch (IOException e) {
-                        System.err.println("An error occurred while writing to the file: " + e.getMessage());
+                        System.err.println("An error occurred while appending the customer: " + e.getMessage());
                     }
                 }
             }
@@ -458,11 +476,13 @@ public class Customer implements User, Serializable {
                                             int quantity = entry.getValue();
 
                                             if (!firstEntry) {
-                                                writer.print(" | ");
+                                                writer.print(",");
                                             }
                                             writer.printf("%s, %d, %.2f", product.getName(), quantity, product.getPrice());
                                             firstEntry = false;
                                         }
+
+                                        writer.println();
                                     }
                                     catch (IOException e) {
                                         System.err.println("An error occurred while writing to the file: " + e.getMessage());

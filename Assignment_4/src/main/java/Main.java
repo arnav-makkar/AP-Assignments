@@ -24,13 +24,13 @@ public class Main {
 
         User.cust_list.add(vip_cust);
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("customer.txt", true))) {
-            oos.writeObject(cust1);
-            oos.writeObject(cust2);
-            oos.writeObject(vip_cust);
-        } catch (IOException e) {
-            System.err.println("An error occurred while writing to the file: " + e.getMessage());
-        }
+//        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("customer.txt", true))) {
+//            oos.writeObject(cust1);
+//            oos.writeObject(cust2);
+//            oos.writeObject(vip_cust);
+//        } catch (IOException e) {
+//            System.err.println("An error occurred while writing to the file: " + e.getMessage());
+//        }
 
         Product coffee = new Product("Coffee",20);
         Product tea = new Product("Tea",10);
