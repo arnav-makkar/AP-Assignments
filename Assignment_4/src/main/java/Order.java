@@ -1,8 +1,8 @@
 import java.util.*;
 
 public class Order {
-    static PriorityQueue<Order> regular_active_orders = new PriorityQueue<>();
-    static PriorityQueue<Order> vip_active_orders = new PriorityQueue<>();
+    static Queue<Order> regular_active_orders = new LinkedList<>();
+    static Queue<Order> vip_active_orders = new LinkedList<>();
 
     static ArrayList<Order> all_orders = new ArrayList<>();
 

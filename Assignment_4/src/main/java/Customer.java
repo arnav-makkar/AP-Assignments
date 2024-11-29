@@ -23,13 +23,13 @@ public class Customer implements User, Serializable {
         this.vip = vip;
     }
 
-    public static boolean checkUserExists(String name, String password){
+    public static boolean checkUserExists(String name, String pw){
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("customer.txt"))) {
             while (true) {
                 try {
                     Customer cust = (Customer) ois.readObject();
 
-                    if (cust.getUserName().equals(name) && cust.getPassword().equals(password)) {
+                    if (cust.getUserName().equals(name) && cust.getPassword().equals(pw)) {
                         return true;
                     }
                 } catch (IOException | ClassNotFoundException e) {
@@ -147,7 +147,16 @@ public class Customer implements User, Serializable {
         return total;
     }
 
-    public static void main(String[] args){
+    public static void cartUpdate(Product item, int quantity, Customer current_user) throws ItemNotAvailableError {
+        if(item.getIs_avaliable()){
+            current_user.Cart.put(item, quantity);
+        }
+        else{
+            throw new ItemNotAvailableError("The selected item is not available.");
+        }
+    }
+
+    public static void main(String[] args) throws ItemNotAvailableError {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -351,12 +360,13 @@ public class Customer implements User, Serializable {
                                             }
 
                                             else{
-
                                                 System.out.print("Enter Quantity: ");
                                                 int quantity = scanner.nextInt();
                                                 scanner.nextLine();
 
-                                                current_user.Cart.put(Menu_Item.menu_list.get(ind).get(choice5 - 1), quantity);
+                                                Product item = Menu_Item.menu_list.get(ind).get(choice5 - 1);
+
+                                                cartUpdate(item, quantity, current_user);
                                             }
                                         }
                                     }
@@ -507,13 +517,25 @@ public class Customer implements User, Serializable {
                                 scanner.nextLine();
 
                                 if(choice3 == 1){
-                                    System.out.println("Order Status: " + current_user.order_list.getLast().getStatus());
+                                    if(current_user.order_list.isEmpty()){
+                                        System.out.println("No orders to display\n");
+                                    }
+
+                                    else{
+                                        System.out.println("Order Status: " + current_user.order_list.getLast().getStatus());
+                                    }
                                 }
 
                                 else if(choice3 == 2){
-                                    current_user.order_list.getLast().setStatus(3);
+                                    if(current_user.order_list.isEmpty()){
+                                        System.out.println("No orders to display\n");
+                                    }
 
-                                    System.out.println("Your order has been cancelled! Refund will be initiated shortly");
+                                    else{
+                                        current_user.order_list.getLast().setStatus(3);
+
+                                        System.out.println("Your order has been cancelled! Refund will be initiated shortly");
+                                    }
                                 }
 
                                 else if(choice3 == 3){
@@ -689,7 +711,10 @@ public class Customer implements User, Serializable {
                         else{
                             System.out.println("Invalid option");
                         }
+
                     }
+
+                    break;
                 }
 
                 else{

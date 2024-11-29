@@ -10,10 +10,16 @@ public class Product extends Menu_Item{
         this.is_available = true;
     }
 
+    Product(String name, double price, boolean is_available) {
+        super(name);
+
+        this.price = price;
+        this.is_available = is_available;
+    }
+
     public void updateItem(String name, double price){
         this.name = name;
         this.price = price;
-        this.is_available = true;
     }
 
     public String getName() {

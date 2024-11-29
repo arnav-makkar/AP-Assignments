@@ -4,7 +4,7 @@ import java.io.ObjectOutputStream;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ItemNotAvailableError {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -37,6 +37,9 @@ public class Main {
         Product samosa = new Product("Samosa",20);
         Product rajma = new Product("Rajma Chawal",100);
         Product chhole = new Product("Chhole Chawal",120);
+
+        tea.setIs_available(false);
+        chhole.setIs_available(false);
 
         Menu_Item.menu_list.get(0).add(coffee);
         Menu_Item.menu_list.get(0).add(tea);
